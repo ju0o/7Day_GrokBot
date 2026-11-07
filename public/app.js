@@ -1,5 +1,5 @@
-import * as E from './engine.mjs';
-import { keyAction } from './keys.mjs';
+import * as E from './engine.mjs?v=20261108r3b';
+import { keyAction, focusAfterMove } from './keys.mjs?v=20261108r3b';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -78,7 +78,7 @@ document.addEventListener('keydown', (e) => {
   const a = keyAction({ key: e.key, ctrl: e.ctrlKey, meta: e.metaKey, alt: e.altKey, repeat: e.repeat }, state.phase, targetKind(e.target));
   if (!a) return;
   e.preventDefault();
-  if (a.startsWith('move:')) { act(E.move(state, a.slice(5), performance.now())); if (state.phase === 'recall') cells[E.view(state).path.at(-1)].focus(); else $('replay').focus(); }
+  if (a.startsWith('move:')) { act(E.move(state, a.slice(5), performance.now())); const f = focusAfterMove(state.phase); if (f === 'head') cells[E.view(state).path.at(-1)].focus(); else if (f === 'replay') $('replay').focus(); }
   else if (a === 'undo') act(E.undo(state));
   else if (a === 'hide') $('primary').click();
   else if (a === 'replay') start(state.seed);

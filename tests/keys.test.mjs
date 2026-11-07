@@ -47,3 +47,9 @@ test('keyboard-only full round via keyAction + engine', () => {
   assert.equal(s.phase, 'done');
   assert.equal(keyAction(k('Enter'), s.phase, 'none'), 'replay');
 });
+import { focusAfterMove } from '../public/keys.mjs';
+test('focus after keyboard move: head while recalling, replay when completed', () => {
+  assert.equal(focusAfterMove('recall'), 'head');
+  assert.equal(focusAfterMove('done'), 'replay');
+  assert.equal(focusAfterMove('preview'), null);
+});

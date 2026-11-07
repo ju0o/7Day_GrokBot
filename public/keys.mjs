@@ -19,3 +19,5 @@ export function keyAction(ev, phase, target = 'none') {
   if ((k === 'r' || k === 'R') && !ev.repeat && target !== 'summary') return 'fresh';
   return null;
 }
+/** Where focus goes after a keyboard move: current cell while recalling, replay button once done. */
+export function focusAfterMove(phase) { return phase === 'recall' ? 'head' : phase === 'done' ? 'replay' : null; }
