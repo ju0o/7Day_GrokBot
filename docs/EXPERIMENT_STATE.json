@@ -8,8 +8,24 @@
   "runs_per_day": 5,
   "total_runs": 35,
   "initial_prompt_counted": false,
-  "runs_by_date": { "2026-11-08": 1 },
+  "runs_by_date": {
+    "2026-11-08": 1
+  },
   "cumulative_runs": 1,
-  "last_run": { "day": 1, "run": 1 },
-  "next_run": { "day": 1, "run": 2, "note": "날짜가 바뀌면 해당 DAY의 run 1" }
+  "last_run": {
+    "day": 1,
+    "run": 1
+  },
+  "next_run": {
+    "day": 1,
+    "run": 2,
+    "note": "날짜가 바뀌면 해당 DAY의 run 1"
+  },
+  "notion_url": "https://app.notion.com/p/411000b759dc81959f77fccd727a45ae",
+  "day1_run1": {
+    "implementation_commit": "c18a5516e4223c5885ad5b57be80dad87da38aed",
+    "docs_commit": "efc16a32d492ae303267457f6812ddb1eca97269",
+    "tests": "npm test 12/12 pass",
+    "browser_ui": "not verified (ERR_CONNECTION_REFUSED)"
+  }
 }

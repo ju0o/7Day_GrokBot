@@ -21,3 +21,12 @@
 **커밋:** 구현 `c18a5516e4223c5885ad5b57be80dad87da38aed` (이 SHA 기록은 후속 문서 커밋)
 
 **다음 우선순위:** 실제 브라우저(모바일 폭 포함) 검증 → 발견된 UX 문제 수정 → 난이도 감각 조정.
+
+### DAY 1 · 회차 1 추가 기록 (같은 회차, 신규 실행 아님) — 05:14~05:16 KST
+- 이전 문서 커밋: `efc16a32d492ae303267457f6812ddb1eca97269` (구현 `c18a5516e4223c5885ad5b57be80dad87da38aed`)
+- Notion: [ONE WORD LAB | GROK BOT | 잔상 항로](https://app.notion.com/p/411000b759dc81959f77fccd727a45ae)
+- **브라우저 QA 실패:** `http://127.0.0.1:4278/#seed=day1-check` → ERR_CONNECTION_REFUSED, 재시도 `http://localhost:4278/#seed=day1-check` → 동일. 게임 UI·키보드·모바일·스크린리더 상호작용은 하나도 확인되지 않았고, 게임 화면 스크린샷 없음.
+- 같은 시각 셸 진단: 박스 점검 11개 모두 PASS, `ss`에서 PID 13691이 127.0.0.1:4278 LISTEN, `curl` 200. **브라우저 실패와 셸 성공의 차이는 원인 미확인**(추측하지 않음, 환경 복구 주장 없음).
+- 실패 증거(제품 화면 아님): [127.0.0.1 연결 거부](evidence/day1-run1/browser-connection-refused-127.0.0.1.webp), [localhost 재시도 연결 거부](evidence/day1-run1/browser-connection-refused-localhost-retry.webp)
+- 테스트: `npm test` 12/12 통과, `npm run check` 통과 (게임 코드 변경 없음)
+- **다음 우선순위:** 기능 추가 전에 브라우저에서 접근 가능한 검증 경로 확보 → 실제 화면 QA.

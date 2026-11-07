@@ -32,6 +32,7 @@ npm run check  # 구문 검사
 - `docs/` — PRD, 계획, 개발일지, 실험 상태
 
 ## 현재 한계 (DAY 1)
-- 브라우저 실제 화면 검증·스크린샷은 아직 없음(다음 회차).
+- 브라우저 UI 미검증: DAY1 브라우저 접속이 ERR_CONNECTION_REFUSED로 실패(셸 curl은 200, 원인 미확인). 증거는 docs/evidence/day1-run1/. 자동 테스트 12/12만 통과.
+- Notion 기록: https://app.notion.com/p/411000b759dc81959f77fccd727a45ae
 - 공개 배포 주소 없음. 일일 시드·난이도·오프라인 캐시 미구현.
 - 기억 단계에서도 출발점·도착점은 의도적으로 보입니다.
