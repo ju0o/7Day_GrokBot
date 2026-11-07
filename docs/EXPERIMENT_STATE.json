@@ -39,7 +39,8 @@
   },
   "day1_run3": {
     "implementation_commit": "3912436922e771b5a680410da294812dd1a103c0",
-    "tests": "npm test 20/20 pass",
-    "browser_qa": "pending"
+    "tests": "npm test 22/22 pass",
+    "browser_qa": "pre-fix QA found stale-cache symptoms; recheck pending",
+    "fix_commit": "7dace57cf2034cb7691798d2c4b33b43190bf6c4"
   }
 }
