@@ -1,0 +1,31 @@
+:root{--ink:#0b1020;--panel:#121a30;--line:#24304f;--text:#e6ecff;--dim:#8f9bc0;--cyan:#38e1ff;--amber:#ffb84d;--red:#ff6b7a;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 0,#16234a 0,var(--ink) 60%);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+.wrap{max-width:520px;margin:0 auto;padding:20px 14px 40px}
+.brand{margin:0;letter-spacing:.3em;font-size:.72rem;color:var(--cyan)}
+h1{margin:.1em 0;font-size:1.9rem}
+.lead{color:var(--dim);margin:.2em 0 1em}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.85rem;color:var(--dim);margin-bottom:10px}
+code{color:var(--amber)}
+.board{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;aspect-ratio:1;touch-action:manipulation}
+.cell{position:relative;border:1px solid var(--line);border-radius:10px;background:#0d1428;color:var(--text);font-size:1.3rem;cursor:pointer;min-width:0;min-height:44px;padding:0}
+.cell:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.cell.route{background:rgba(56,225,255,.18);border-color:var(--cyan);box-shadow:0 0 12px rgba(56,225,255,.35) inset}
+.cell.walked{background:rgba(56,225,255,.35);border-color:var(--cyan)}
+.cell.head{box-shadow:0 0 0 3px var(--cyan)}
+.cell.start{color:var(--cyan)}
+.cell.goal{color:var(--amber)}
+.cell .n{position:absolute;top:2px;left:6px;font-size:.65rem;color:var(--dim)}
+.board.shake{animation:shake .25s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.status{min-height:3em;margin:10px 0}
+.status.ok{color:var(--cyan)}.status.bad{color:var(--red)}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.btn{flex:1 1 auto;min-height:44px;border-radius:10px;border:1px solid var(--line);background:#18223f;color:var(--text);font:inherit;font-size:.92rem;padding:8px 12px;cursor:pointer}
+.btn.primary{background:var(--cyan);color:#04121a;border-color:var(--cyan);font-weight:700}
+.btn[hidden]{display:none}
+.help{margin-top:14px;color:var(--dim)}
+footer{margin-top:18px;font-size:.78rem;color:var(--dim)}
+@media (max-width:380px){h1{font-size:1.6rem}.board{gap:4px}.btn{font-size:.85rem}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

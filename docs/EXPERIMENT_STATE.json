@@ -1,0 +1,15 @@
+{
+  "experiment": "ONE WORD LAB",
+  "bot": "Grok Bot",
+  "project": "잔상 항로 / Afterimage Route",
+  "timezone": "Asia/Seoul",
+  "start": "2026-11-08",
+  "end": "2026-11-14",
+  "runs_per_day": 5,
+  "total_runs": 35,
+  "initial_prompt_counted": false,
+  "runs_by_date": { "2026-11-08": 1 },
+  "cumulative_runs": 1,
+  "last_run": { "day": 1, "run": 1 },
+  "next_run": { "day": 1, "run": 2, "note": "날짜가 바뀌면 해당 DAY의 run 1" }
+}

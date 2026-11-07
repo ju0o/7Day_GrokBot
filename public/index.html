@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="잔상 항로 — 5×5 지도 위 항로를 잠깐 보고 기억으로 다시 그리는 1분 공간 기억 퍼즐">
+<title>잔상 항로 · Afterimage Route</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <p class="brand">AFTERIMAGE ROUTE</p>
+    <h1>잔상 항로</h1>
+    <p class="lead">밤 지도에 잠깐 떠오른 항로를 기억해, 출발점부터 도착점까지 다시 그리세요.</p>
+  </header>
+  <section class="panel" aria-label="게임">
+    <div class="meta">
+      <span>시드 <code id="seed"></code></span>
+      <span id="progress"></span>
+      <span id="mistakes"></span>
+    </div>
+    <div id="board" class="board" role="grid" aria-label="5×5 항로 지도"></div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <div class="actions">
+      <button id="primary" class="btn primary" type="button">기억했어요, 숨기기</button>
+      <button id="undo" class="btn" type="button">한 칸 되돌리기</button>
+      <button id="reveal" class="btn" type="button">다시 보기</button>
+      <button id="replay" class="btn" type="button">같은 항로 다시</button>
+      <button id="fresh" class="btn" type="button">새 항로</button>
+    </div>
+  </section>
+  <details class="help">
+    <summary>조작 방법</summary>
+    <ul>
+      <li>항로가 보일 때 외운 뒤 <b>기억했어요</b>를 누르면 항로가 사라져요.</li>
+      <li>출발점(◎)에서 이웃한 칸을 눌러 한 칸씩 이어 가세요. 마지막 칸을 다시 누르면 한 칸 되돌려요.</li>
+      <li>키보드: 방향키로 이동, Backspace 되돌리기, Enter 숨기기, R 새 항로.</li>
+      <li><b>다시 보기</b>를 쓰면 진행이 초기화되고 이번 기록은 ‘연습’으로 표시돼요.</li>
+    </ul>
+  </details>
+  <footer>계정·서버·광고·분석 없음. 모든 진행은 이 브라우저 안에서만 계산돼요. 시드를 주소 뒤 <code>#seed=</code>로 공유할 수 있어요.</footer>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>
