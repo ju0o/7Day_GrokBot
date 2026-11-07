@@ -28,11 +28,12 @@ npm run check  # 구문 검사
 `public/` 폴더는 정적 파일이라 아무 정적 호스팅에도 올릴 수 있습니다(ES 모듈이라 `file://` 직접 열기는 브라우저에 따라 막힐 수 있음).
 
 ## 배포 시 주의
-`public/index.html`과 `public/app.js`의 `?v=` 버전 표시는 수동입니다. 코드 변경을 배포할 때마다 같은 값으로 함께 바꿔야 옛 캐시 파일과 섞이지 않습니다(테스트가 값 일치만 검사). 루트 주소의 캐시는 최대 10분 남을 수 있습니다.
+`public/` 파일을 바꾸면 `npm run version:write`로 `?v=` 버전을 다시 계산하세요. 버전은 파일 내용의 sha256에서 나오고(버전 토큰 자체는 제외), `npm run check`가 불일치하면 실패합니다. 이미 옛 `index.html`을 캐시한 브라우저는 GitHub Pages 캐시(최대 약 10분) 동안 옛 버전을 볼 수 있습니다.
 
 ## 구조
 - `public/engine.mjs` — 순수·결정적 게임 엔진(시드 PRNG, 자기교차 없는 직교 항로, 불변 상태 전이, 기억 단계에서 항로를 숨기는 `view`)
 - `public/app.js`, `index.html`, `style.css` — 접근 가능한 버튼 격자 렌더러
+- `scripts/asset-version.mjs` — 내용 기반 자산 버전 계산·검사, `scripts/route-stats.mjs` — 엔진 항로 통계
 - `scripts/server.mjs` — 내장 정적 서버(127.0.0.1, GET/HEAD, 경로 이탈 차단)
 - `tests/` — 엔진·서버 테스트
 - `docs/` — PRD, 계획, 개발일지, 실험 상태

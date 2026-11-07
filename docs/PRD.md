@@ -22,6 +22,8 @@ preview →(숨기기) recall →(완주) done; recall →(다시 보기) previe
 ## 5. 기술 스택·아키텍처
 네이티브 ESM HTML/CSS/JS, 빌드·의존성 없음. `engine.mjs`(순수 상태) → `view()`(기억 단계에서 route=null) → `app.js` 렌더러. 정답 정보는 기억 단계 DOM/ARIA/클래스/data 속성에 들어가지 않음. Node 내장 정적 서버와 node:test.
 
+캐시 대응: `public/` 자산 URL에 내용 기반 버전(`?v=sha256 앞 12자`)을 붙이고 `npm run check`가 불일치를 막음.
+
 ## 6. ERD / DBML
 **적용하지 않음.** 데이터베이스가 없습니다. 모든 상태는 한 판 동안 브라우저 메모리에만 존재하고, 지속 저장되는 관계형 데이터가 없습니다. (추후 localStorage 기록을 넣더라도 단일 키-값이라 ERD가 필요하지 않음.)
 

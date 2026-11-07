@@ -9,18 +9,18 @@
   "total_runs": 35,
   "initial_prompt_counted": false,
   "runs_by_date": {
-    "2026-11-08": 3
+    "2026-11-08": 4
   },
-  "cumulative_runs": 3,
+  "cumulative_runs": 4,
   "last_run": {
     "day": 1,
-    "run": 3,
+    "run": 4,
     "status": "completed",
-    "started": "2026-11-08 05:30 KST"
+    "started": "2026-11-08 07:36 KST"
   },
   "next_run": {
     "day": 1,
-    "run": 4,
+    "run": 5,
     "note": "날짜가 바뀌면 해당 DAY의 run 1"
   },
   "notion_url": "https://app.notion.com/p/411000b759dc81959f77fccd727a45ae",
@@ -42,5 +42,12 @@
     "tests": "npm test 22/22 pass",
     "browser_qa": "post-fix recheck PASS (Chrome, 360x985 emulation): body Enter, wrong-cell copy, completion focus on replay, Enter replay same seed; screenreader/real devices/other browsers untested; stale-cache cause unproven",
     "fix_commit": "7dace57cf2034cb7691798d2c4b33b43190bf6c4"
+  },
+  "day1_run4": {
+    "implementation_commit": "3fbe528ba21849413548f678c22a4420eded6dde",
+    "asset_version": "288c1c66b2da",
+    "tests": "npm test 27/27 pass",
+    "route_stats": "10000 seeds len8: turns 1:103 2:945 3:2472 4:3420 5:2539 6:521",
+    "browser_qa": "pending"
   }
 }
