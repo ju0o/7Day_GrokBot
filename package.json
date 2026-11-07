@@ -5,10 +5,13 @@
   "description": "잔상 항로 / Afterimage Route — offline-friendly browser spatial memory route puzzle",
   "type": "module",
   "license": "MIT",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start": "node scripts/server.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check public/app.js && node --check public/engine.mjs && node --check public/keys.mjs && node --check scripts/server.mjs"
+    "check": "node --check public/app.js && node --check public/engine.mjs && node --check public/keys.mjs && node --check scripts/server.mjs && node --check scripts/asset-version.mjs && node scripts/asset-version.mjs --check",
+    "version:write": "node scripts/asset-version.mjs --write"
   }
 }

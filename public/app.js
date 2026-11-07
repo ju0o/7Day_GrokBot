@@ -1,5 +1,5 @@
-import * as E from './engine.mjs?v=20261108r3b';
-import { keyAction, focusAfterMove } from './keys.mjs?v=20261108r3b';
+import * as E from './engine.mjs?v=288c1c66b2da';
+import { keyAction, focusAfterMove } from './keys.mjs?v=288c1c66b2da';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
