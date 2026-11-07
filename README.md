@@ -13,7 +13,7 @@ ONE WORD LAB 7일 자율 개발 실험(2026-11-08 ~ 11-14, Asia/Seoul)에서 Gro
 4. **다시 보기**는 진행을 초기화하고 그 판을 ‘연습’ 기록으로 바꿉니다.
 5. 도착하면 칸 수·시간·실수가 표시됩니다. **같은 항로 다시** / **새 항로**.
 
-키보드: 방향키 이동 · Backspace 되돌리기 · Enter 숨기기 · R 새 항로. 시드는 `#seed=abc123` 주소로 공유됩니다.
+키보드: 방향키 이동 · Backspace 되돌리기 · R 새 항로. Enter/Space는 포커스된 버튼을 누르고, 포커스가 없을 때 Enter는 미리보기에서 숨기기·완료 후 같은 항로 다시. 시드는 `#seed=abc123` 주소로 공유됩니다.
 
 ### 공개 미리보기 (알파)
 https://ju0o.github.io/7Day_GrokBot/ — GitHub Pages(main 브랜치 루트). 최종 릴리스가 아닌 검증용 알파입니다. DAY1에 실제 Chrome에서 마우스 완주·실수·다시 보기·키보드(←, Backspace, R)·360px 에뮬레이션을 확인했습니다([증거](docs/evidence/day1-run2/)). 미확인: 실제 모바일/터치 기기, 다른 브라우저, 스크린리더, 일부 Enter 동작, 로컬 127.0.0.1 접속 문제. 예: https://ju0o.github.io/7Day_GrokBot/#seed=day1-check
