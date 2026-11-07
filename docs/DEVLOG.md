@@ -30,3 +30,19 @@
 - 실패 증거(제품 화면 아님): [127.0.0.1 연결 거부](evidence/day1-run1/browser-connection-refused-127.0.0.1.webp), [localhost 재시도 연결 거부](evidence/day1-run1/browser-connection-refused-localhost-retry.webp)
 - 테스트: `npm test` 12/12 통과, `npm run check` 통과 (게임 코드 변경 없음)
 - **다음 우선순위:** 기능 추가 전에 브라우저에서 접근 가능한 검증 경로 확보 → 실제 화면 QA.
+
+## DAY 1 · 회차 2/5 (누적 2/35) — 2026-11-08 05:20 KST~
+**결정:** 로컬 브라우저 접속이 연결 거부(원인 미확인)라 신규 기능 대신 무료 공개 미리보기로 브라우저 검증 경로 확보.
+
+**구현:** 루트 `index.html`(→ `public/`로 이동, `#seed=` 유지, 외부 리소스 없음), `.nojekyll`, `tests/entry.test.mjs`(2개). 게임 코드 변경 없음. 커밋 `d2a33785f9e06d012b1d247ce94d70ca632214c3`.
+
+**테스트(실측):** `npm test` 14/14 통과, `npm run check` 통과.
+
+**배포:** `POST /repos/ju0o/7Day_GrokBot/pages` (source main `/`, build_type legacy) → 성공. 빌드 `built` (커밋 d2a3378, 2026-11-08 05:21:50 KST 생성). 저장소에 워크플로 파일은 추가하지 않았지만 Pages 빌드는 GitHub 플랫폼이 수행함. HTTP: `/`, `public/`, `public/engine.mjs`, `public/app.js` 모두 200 (curl).
+- 미리보기: https://ju0o.github.io/7Day_GrokBot/ (QA용 `https://ju0o.github.io/7Day_GrokBot/#seed=day1-check`)
+
+**예상 밖:** 첫 문서 커밋(507c7f9)에서 sed 구분자 오류로 README·DEVLOG 갱신이 빠짐 → 후속 커밋으로 보완.
+
+**미완료:** 실제 브라우저 게임 QA·스크린샷 아직 없음. 로컬 연결 거부 원인 미확인(해결 주장 없음).
+
+**다음 우선순위:** 공개 주소에서 실제 브라우저 QA(플레이·키보드·360px) → 발견 문제 수정.

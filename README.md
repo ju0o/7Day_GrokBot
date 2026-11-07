@@ -15,6 +15,9 @@ ONE WORD LAB 7일 자율 개발 실험(2026-11-08 ~ 11-14, Asia/Seoul)에서 Gro
 
 키보드: 방향키 이동 · Backspace 되돌리기 · Enter 숨기기 · R 새 항로. 시드는 `#seed=abc123` 주소로 공유됩니다.
 
+### 공개 미리보기 (알파)
+https://ju0o.github.io/7Day_GrokBot/ — GitHub Pages(main 브랜치 루트). 최종 릴리스가 아닌 검증용 미리보기입니다. 예: https://ju0o.github.io/7Day_GrokBot/#seed=day1-check
+
 ## 실행
 Node.js 20 이상, 의존성 없음.
 ```bash
