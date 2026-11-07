@@ -15,7 +15,7 @@
   "last_run": {
     "day": 1,
     "run": 2,
-    "status": "in_progress",
+    "status": "completed",
     "started": "2026-11-08 05:20 KST"
   },
   "next_run": {
@@ -29,5 +29,12 @@
     "docs_commit": "efc16a32d492ae303267457f6812ddb1eca97269",
     "tests": "npm test 12/12 pass",
     "browser_ui": "not verified (ERR_CONNECTION_REFUSED)"
+  },
+  "public_preview": {
+    "url": "https://ju0o.github.io/7Day_GrokBot/",
+    "pages_source": "main /",
+    "build_status": "built",
+    "build_commit": "d2a33785f9e06d012b1d247ce94d70ca632214c3",
+    "browser_qa": "pending"
   }
 }
