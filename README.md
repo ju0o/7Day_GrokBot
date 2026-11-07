@@ -16,7 +16,7 @@ ONE WORD LAB 7일 자율 개발 실험(2026-11-08 ~ 11-14, Asia/Seoul)에서 Gro
 키보드: 방향키 이동 · Backspace 되돌리기 · R 새 항로. Enter/Space는 포커스된 버튼을 누르고, 포커스가 없을 때 Enter는 미리보기에서 숨기기·완료 후 같은 항로 다시. 시드는 `#seed=abc123` 주소로 공유됩니다.
 
 ### 공개 미리보기 (알파)
-https://ju0o.github.io/7Day_GrokBot/ — GitHub Pages(main 브랜치 루트). 최종 릴리스가 아닌 검증용 알파입니다. DAY1에 실제 Chrome에서 마우스 완주·실수·다시 보기·키보드(←, Backspace, R)·360px 에뮬레이션을 확인했습니다([증거](docs/evidence/day1-run2/)). 미확인: 실제 모바일/터치 기기, 다른 브라우저, 스크린리더, 일부 Enter 동작, 로컬 127.0.0.1 접속 문제. 예: https://ju0o.github.io/7Day_GrokBot/#seed=day1-check
+https://ju0o.github.io/7Day_GrokBot/ — GitHub Pages(main 브랜치 루트). 최종 릴리스가 아닌 검증용 알파입니다. DAY1에 실제 Chrome에서 마우스 완주·실수·다시 보기·키보드(←, Backspace, R)·360px 에뮬레이션을 확인했습니다([증거](docs/evidence/day1-run2/)). DAY1 run3에 Enter 규칙·완주 후 포커스·틀린 칸 문구도 Chrome(360px 에뮬레이션)에서 재확인했습니다. 미확인: 실제 모바일/터치 기기, 다른 브라우저, 스크린리더, 일부 Enter 동작, 로컬 127.0.0.1 접속 문제. 예: https://ju0o.github.io/7Day_GrokBot/#seed=day1-check
 
 ## 실행
 Node.js 20 이상, 의존성 없음.
@@ -26,6 +26,9 @@ npm test       # node --test tests/*.test.mjs
 npm run check  # 구문 검사
 ```
 `public/` 폴더는 정적 파일이라 아무 정적 호스팅에도 올릴 수 있습니다(ES 모듈이라 `file://` 직접 열기는 브라우저에 따라 막힐 수 있음).
+
+## 배포 시 주의
+`public/index.html`과 `public/app.js`의 `?v=` 버전 표시는 수동입니다. 코드 변경을 배포할 때마다 같은 값으로 함께 바꿔야 옛 캐시 파일과 섞이지 않습니다(테스트가 값 일치만 검사). 루트 주소의 캐시는 최대 10분 남을 수 있습니다.
 
 ## 구조
 - `public/engine.mjs` — 순수·결정적 게임 엔진(시드 PRNG, 자기교차 없는 직교 항로, 불변 상태 전이, 기억 단계에서 항로를 숨기는 `view`)

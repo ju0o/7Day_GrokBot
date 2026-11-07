@@ -93,3 +93,19 @@
 **증거(수정 전 화면, 수정 증명 아님):** [완주 후 포커스가 칸에 남음](evidence/day1-run3/prefix-completed-focus-stays-on-cell.png) · [360px 안내](evidence/day1-run3/prefix-instructions-360px.webp)
 
 **미확인:** 수정 후 브라우저 재확인 대기(부모 확인). 이번에도 첫 접속 시 캐시된 옛 `index.html`(최대 10분)이 보일 수 있음.
+
+### DAY 1 · 회차 3 수정 후 브라우저 재확인 (같은 회차, 05:38 KST 기록)
+주소: `https://ju0o.github.io/7Day_GrokBot/public/?qa=20261108r3b#seed=day1-check` (강력 새로고침 없이 별도 QA 주소로 로드). 수정 커밋 `7dace57`, 문서 `510f2d6`.
+
+**PASS (실측, Chrome 360×985 에뮬레이션):**
+- 본문 Enter → 숨기기, ◎ 포커스.
+- ↑로 틀린 칸 → "그 칸은 항로가 아니에요. 실수 1회, 위치는 그대로예요." 전체 문구, 0/7, 포커스 ◎.
+- ← ← ↓ → → → ↑ 로 7/7 완주 → '같은 항로 다시'에 포커스(포커스 링 + 접근성 스냅샷 active 확인).
+- 바로 Enter → 같은 시드 미리보기 한 번, 0/7.
+- 이전 QA에서 이미 PASS: 현재 칸 Enter 무변화, ←/Backspace, 새 항로 버튼 Enter 1회, r 1회, Ctrl+r 시드 유지, 360px 안내.
+
+**스크린샷(수정 후):** [완주·replay 포커스](evidence/day1-run3/postfix-completed-replay-focused-360.png) · [Enter 후 같은 시드 미리보기](evidence/day1-run3/postfix-after-enter-same-seed-preview-360.png). 수정 전 실패 증거(`prefix-*`)는 그대로 보존.
+
+**주의:** 브라우저 캐시 내용은 확인하지 않았으므로 '옛 app.js 캐시' 원인은 여전히 **가설**. 버전 표시(`?v=`)는 수동이라 배포마다 직접 바꿔야 하며, 일반 루트 주소가 즉시 갱신된다고 보장하지 않음. 360px는 에뮬레이션(실기기 아님), 스크린리더·다른 브라우저 미테스트.
+
+**다음 우선순위(계획):** 버전 표시 갱신 절차를 문서화/점검 테스트로 고정하고, 난이도·길이 감각 검토.
