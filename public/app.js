@@ -1,4 +1,5 @@
 import * as E from './engine.mjs';
+import { keyAction } from './keys.mjs';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -20,11 +21,11 @@ function act(next) {
 }
 const label = (i) => { const [r, c] = E.rc(i); return `${r + 1}행 ${c + 1}열`; };
 const msgs = {
-  ready: ['항로를 외우세요. 준비되면 숨기기를 누르세요.', ''],
-  recall: ['항로가 사라졌어요. ◎ 출발점에서 이어 가세요.', ''],
+  ready: ['◎에서 ★까지 번호 순서로 이어진 항로를 외우세요. 준비되면 숨기기를 누르세요.', ''],
+  recall: ['◎에서 시작해 상하좌우로 한 칸씩 이어 가세요. 방향키도 돼요.', ''],
   step: ['좋아요, 계속 이어 가세요.', ''],
   undo: ['한 칸 되돌렸어요.', ''],
-  wrong: ['그 칸은 항로가 아니에요.', 'bad'],
+  wrong: ['그 칸은 항로가 아니에요. 실수 1회, 위치는 그대로예요.', 'bad'],
   'not-adjacent': ['현재 위치와 이웃한 칸만 이동할 수 있어요.', 'bad'],
   revealed: ['항로를 다시 보여 드려요. 이번 판은 연습 기록으로 남아요.', ''],
   ignored: [null, ''],
@@ -66,13 +67,22 @@ $('undo').onclick = () => act(E.undo(state));
 $('reveal').onclick = () => act(E.reveal(state));
 $('replay').onclick = () => start(state.seed);
 $('fresh').onclick = () => start(E.randomSeed());
+function targetKind(el) {
+  if (!el || el === document.body) return 'none';
+  if (el.classList?.contains('cell')) return 'cell';
+  if (el.tagName === 'SUMMARY') return 'summary';
+  if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable) return 'text';
+  return 'button';
+}
 document.addEventListener('keydown', (e) => {
-  if (e.target.tagName === 'SUMMARY') return;
-  const dir = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' }[e.key];
-  if (dir && state.phase === 'recall') { e.preventDefault(); act(E.move(state, dir, performance.now())); const h = E.view(state).path.at(-1); if (state.phase === 'recall') cells[h].focus(); }
-  else if (e.key === 'Backspace' && state.phase === 'recall') { e.preventDefault(); act(E.undo(state)); }
-  else if (e.key === 'Enter' && state.phase === 'preview' && e.target === document.body) { $('primary').click(); }
-  else if ((e.key === 'r' || e.key === 'R') && !e.ctrlKey && !e.metaKey) { start(E.randomSeed()); }
+  const a = keyAction({ key: e.key, ctrl: e.ctrlKey, meta: e.metaKey, alt: e.altKey, repeat: e.repeat }, state.phase, targetKind(e.target));
+  if (!a) return;
+  e.preventDefault();
+  if (a.startsWith('move:')) { act(E.move(state, a.slice(5), performance.now())); if (state.phase === 'recall') cells[E.view(state).path.at(-1)].focus(); else $('replay').focus(); }
+  else if (a === 'undo') act(E.undo(state));
+  else if (a === 'hide') $('primary').click();
+  else if (a === 'replay') start(state.seed);
+  else if (a === 'fresh') start(E.randomSeed());
 });
 window.addEventListener('hashchange', () => { const s = seedFromHash(); if (s && s !== state.seed) start(s); });
 start(seedFromHash() || E.randomSeed());

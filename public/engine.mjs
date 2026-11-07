@@ -54,6 +54,7 @@ export function startRecall(s, now = 0) {
 export function select(s, cell, now = 0) {
   if (s.phase !== 'recall' || !Number.isInteger(cell) || cell < 0 || cell >= SIZE * SIZE) return upd(s, { last: 'ignored' });
   const end = s.path.at(-1);
+  if (cell === end) return upd(s, { last: 'ignored' }); // re-activating current cell is a no-op
   if (!adjacent(end, cell)) return upd(s, { last: 'not-adjacent' });
   if (s.path.length >= 2 && cell === s.path.at(-2)) return undo(s);
   const expected = s.route[s.path.length];
