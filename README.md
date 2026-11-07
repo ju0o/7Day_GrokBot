@@ -16,7 +16,7 @@ ONE WORD LAB 7일 자율 개발 실험(2026-11-08 ~ 11-14, Asia/Seoul)에서 Gro
 키보드: 방향키 이동 · Backspace 되돌리기 · Enter 숨기기 · R 새 항로. 시드는 `#seed=abc123` 주소로 공유됩니다.
 
 ### 공개 미리보기 (알파)
-https://ju0o.github.io/7Day_GrokBot/ — GitHub Pages(main 브랜치 루트). 최종 릴리스가 아닌 검증용 미리보기입니다. 예: https://ju0o.github.io/7Day_GrokBot/#seed=day1-check
+https://ju0o.github.io/7Day_GrokBot/ — GitHub Pages(main 브랜치 루트). 최종 릴리스가 아닌 검증용 알파입니다. DAY1에 실제 Chrome에서 마우스 완주·실수·다시 보기·키보드(←, Backspace, R)·360px 에뮬레이션을 확인했습니다([증거](docs/evidence/day1-run2/)). 미확인: 실제 모바일/터치 기기, 다른 브라우저, 스크린리더, 일부 Enter 동작, 로컬 127.0.0.1 접속 문제. 예: https://ju0o.github.io/7Day_GrokBot/#seed=day1-check
 
 ## 실행
 Node.js 20 이상, 의존성 없음.
@@ -35,7 +35,8 @@ npm run check  # 구문 검사
 - `docs/` — PRD, 계획, 개발일지, 실험 상태
 
 ## 현재 한계 (DAY 1)
-- 브라우저 UI 미검증: DAY1 브라우저 접속이 ERR_CONNECTION_REFUSED로 실패(셸 curl은 200, 원인 미확인). 증거는 docs/evidence/day1-run1/. 자동 테스트 12/12만 통과.
+- 로컬 브라우저 접속은 ERR_CONNECTION_REFUSED(셸 curl은 200, 원인 미확인, docs/evidence/day1-run1/). 브라우저 검증은 공개 미리보기에서 수행.
+- 스크린리더·실제 모바일 기기·다른 브라우저 엔진 미검증.
 - Notion 기록: https://app.notion.com/p/411000b759dc81959f77fccd727a45ae
 - 공개 배포 주소 없음. 일일 시드·난이도·오프라인 캐시 미구현.
 - 기억 단계에서도 출발점·도착점은 의도적으로 보입니다.

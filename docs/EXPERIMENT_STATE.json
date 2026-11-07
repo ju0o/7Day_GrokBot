@@ -35,6 +35,6 @@
     "pages_source": "main /",
     "build_status": "built",
     "build_commit": "d2a33785f9e06d012b1d247ce94d70ca632214c3",
-    "browser_qa": "pending"
+    "browser_qa": "core flow passed in Chrome (mouse, keyboard partial, 360px emulated); screenreader/real devices untested"
   }
 }
