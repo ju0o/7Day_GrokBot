@@ -1,5 +1,5 @@
-import * as E from './engine.mjs?v=5072a56fa3de';
-import { keyAction, focusAfterMove } from './keys.mjs?v=5072a56fa3de';
+import * as E from './engine.mjs?v=b78c5e1d395f';
+import { keyAction, focusAfterMove } from './keys.mjs?v=b78c5e1d395f';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -10,7 +10,6 @@ for (let i = 0; i < 25; i++) {
   b.addEventListener('click', () => act(E.select(state, i, performance.now())));
   board.append(b); cells.push(b);
 }
-function seedFromHash() { return E.parseSeedHash(location.hash); }
 function start(seed) {
   state = E.newGame(seed); history.replaceState(null, '', '#seed=' + encodeURIComponent(state.seed)); render();
 }
@@ -84,5 +83,6 @@ document.addEventListener('keydown', (e) => {
   else if (a === 'replay') start(state.seed);
   else if (a === 'fresh') start(E.randomSeed());
 });
-window.addEventListener('hashchange', () => { const s = seedFromHash(); if (s && s !== state.seed) start(s); });
-start(seedFromHash() || E.randomSeed());
+function syncFromHash() { const r = E.resolveSeed(location.hash, state ? state.seed : null); if (r.restart) start(r.seed); }
+window.addEventListener('hashchange', syncFromHash);
+syncFromHash();

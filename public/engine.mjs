@@ -94,3 +94,13 @@ export function parseSeedHash(hash) {
   const m = /^#seed=([A-Za-z0-9_-]{1,32})$/.exec(typeof hash === 'string' ? hash : '');
   return m ? m[1] : null;
 }
+/**
+ * Decide what to play for a URL hash (initial load and every hashchange).
+ * valid & same as current → keep (no restart); valid & different → that seed;
+ * invalid/empty → a NEW random seed (URL is then canonicalized to `#seed=<new>` by the caller).
+ */
+export function resolveSeed(hash, currentSeed, makeRandom = randomSeed) {
+  const parsed = parseSeedHash(hash);
+  if (parsed !== null) return parsed === currentSeed ? { seed: currentSeed, restart: false } : { seed: parsed, restart: true };
+  return { seed: makeRandom(), restart: true };
+}

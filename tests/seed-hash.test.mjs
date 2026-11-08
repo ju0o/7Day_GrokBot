@@ -21,3 +21,20 @@ test('random seeds always round-trip through the share hash', () => {
 test('same parsed seed reproduces the same route', () => {
   assert.deepEqual(newGame(parseSeedHash('#seed=day1-check')).route, newGame('day1-check').route);
 });
+import { resolveSeed } from '../public/engine.mjs';
+test('entry/hashchange resolution: invalid or empty → new random seed with restart (canonical URL)', () => {
+  const rnd = () => 'new123';
+  for (const h of ['', '#seed=', '#seed=abc%3Cscript%3E', '#seed=abc<script>', '#xseed=abc'])
+    for (const cur of [null, 'day1-check']) assert.deepEqual(resolveSeed(h, cur, rnd), { seed: 'new123', restart: true }, h + '/' + cur);
+});
+test('entry/hashchange resolution: valid seeds', () => {
+  assert.deepEqual(resolveSeed('#seed=qa_run5-B', null, () => 'x'), { seed: 'qa_run5-B', restart: true });
+  assert.deepEqual(resolveSeed('#seed=qa_run5-B', 'day1-check', () => 'x'), { seed: 'qa_run5-B', restart: true });
+  assert.deepEqual(resolveSeed('#seed=day1-check', 'day1-check', () => 'x'), { seed: 'day1-check', restart: false }); // our own canonical replaceState / no-op
+});
+test('canonical URL produced after resolution always re-resolves to the same seed (no loop)', () => {
+  for (const h of ['#seed=', '#seed=abc<script>', '#seed=ok-1']) {
+    const r = resolveSeed(h, null);
+    assert.deepEqual(resolveSeed('#seed=' + encodeURIComponent(r.seed), r.seed), { seed: r.seed, restart: false });
+  }
+});
