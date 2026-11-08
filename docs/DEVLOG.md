@@ -162,3 +162,14 @@
 **테스트(실측):** `npm test` 34/34 통과, `npm run check` 통과(버전 OK). 실제 브라우저 이벤트 테스트는 아님.
 
 **증거:** [연습 완주](evidence/day1-run5/practice-completed.webp) · [유효 시드 qa_run5-B 미리보기](evidence/day1-run5/valid-seed-qa_run5-B-preview.png). 수정 후 브라우저 재확인 대기.
+
+### DAY 1 · 회차 5 수정 후 재확인 (같은 회차, 12:12 KST)
+주소 `…/public/?qa=b78c5e1d395f#seed=day1-check` (Chrome). 수정 `cb52be0`, 문서 `a3b5082`.
+
+**PASS (실측):** 스타일 적용 미리보기 · 같은 탭 `#seed=abc%3Cscript%3E` → 주소 `#seed=05y5ry`로 정규화, 시드 05y5ry 표시 · 같은 탭 `#seed=` → `#seed=wyjmsu`, 시드 wyjmsu 표시 · `#seed=qa_run5-B` 정확한 항로(R1C1→R1C2→R2C2→R2C1→R3C1→R3C2→R4C2→R4C1), Ctrl+R 후 항로·주소 유지. 첫 QA 실패가 캐시가 아니라 hashchange 코드 결함이었음이 수정 후 동작으로 확인됨. 연습 완주 PASS는 앞선 12:08 QA 결과.
+
+**스크린샷(수정 후):** [잘못된 해시 → 새 시드](evidence/day1-run5/postfix-malformed-hash-new-seed-05y5ry.png) · [유효 시드 새로고침 후](evidence/day1-run5/postfix-valid-seed-after-reload.png)
+
+**미확인:** 스크린리더·실제 모바일/터치·다른 브라우저, 로컬 127.0.0.1 연결 거부 원인.
+
+DAY 1 종료. 다음 회차: 2026-11-09 DAY2 run1(누적 6).
