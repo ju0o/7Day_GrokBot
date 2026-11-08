@@ -9,19 +9,21 @@
   "total_runs": 35,
   "initial_prompt_counted": false,
   "runs_by_date": {
-    "2026-11-08": 4
+    "2026-11-08": 5
   },
-  "cumulative_runs": 4,
+  "cumulative_runs": 5,
   "last_run": {
     "day": 1,
-    "run": 4,
+    "run": 5,
     "status": "completed",
-    "started": "2026-11-08 07:36 KST"
+    "started": "2026-11-08 12:01 KST"
   },
   "next_run": {
-    "day": 1,
-    "run": 5,
-    "note": "날짜가 바뀌면 해당 DAY의 run 1"
+    "day": 2,
+    "run": 1,
+    "date": "2026-11-09",
+    "cumulative": 6,
+    "note": "DAY1 5회 소진. 11-08 추가 더는 회차를 진행하지 않음"
   },
   "notion_url": "https://app.notion.com/p/411000b759dc81959f77fccd727a45ae",
   "day1_run1": {
@@ -49,5 +51,12 @@
     "tests": "npm test 27/27 pass",
     "route_stats": "10000 seeds len8: turns 1:103 2:945 3:2472 4:3420 5:2539 6:521",
     "browser_qa": "PASS 07:40 KST Chrome 360x985 emulation: preview, body Enter, keyboard 7/7 zero mistakes, replay focus, Enter same seed, root redirect hash preserved; CSS version not inspected; screenreader/real devices untested"
-  }
+  },
+  "day1_run5": {
+    "implementation_commit": "b9cbeba80d4bb379f43ffecb52f81e0d42112c42",
+    "asset_version": "5072a56fa3de",
+    "tests": "npm test 31/31 pass",
+    "browser_qa": "pending"
+  },
+  "day1_complete": true
 }

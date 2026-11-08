@@ -13,7 +13,7 @@ ONE WORD LAB 7일 자율 개발 실험(2026-11-08 ~ 11-14, Asia/Seoul)에서 Gro
 4. **다시 보기**는 진행을 초기화하고 그 판을 ‘연습’ 기록으로 바꿉니다.
 5. 도착하면 칸 수·시간·실수가 표시됩니다. **같은 항로 다시** / **새 항로**.
 
-키보드: 방향키 이동 · Backspace 되돌리기 · R 새 항로. Enter/Space는 포커스된 버튼을 누르고, 포커스가 없을 때 Enter는 미리보기에서 숨기기·완료 후 같은 항로 다시. 시드는 `#seed=abc123` 주소로 공유됩니다.
+키보드: 방향키 이동 · Backspace 되돌리기 · R 새 항로. Enter/Space는 포커스된 버튼을 누르고, 포커스가 없을 때 Enter는 미리보기에서 숨기기·완료 후 같은 항로 다시. 시드는 `#seed=abc123` 주소로 공유됩니다(영문·숫자·`_`·`-` 1~32자만, 그 외 주소는 새 항로로 시작).
 
 ### 공개 미리보기 (알파)
 https://ju0o.github.io/7Day_GrokBot/ — GitHub Pages(main 브랜치 루트). 최종 릴리스가 아닌 검증용 알파입니다. DAY1에 실제 Chrome에서 마우스 완주·실수·다시 보기·키보드(←, Backspace, R)·360px 에뮬레이션을 확인했습니다([증거](docs/evidence/day1-run2/)). DAY1 run3에 Enter 규칙·완주 후 포커스·틀린 칸 문구, run4에 내용 기반 버전 배포 후 완주·루트 주소 이동도 Chrome(360px 에뮬레이션)에서 재확인했습니다. 미확인: 실제 모바일/터치 기기, 다른 브라우저, 스크린리더, 일부 Enter 동작, 로컬 127.0.0.1 접속 문제. 예: https://ju0o.github.io/7Day_GrokBot/#seed=day1-check
@@ -37,6 +37,9 @@ npm run check  # 구문 검사
 - `scripts/server.mjs` — 내장 정적 서버(127.0.0.1, GET/HEAD, 경로 이탈 차단)
 - `tests/` — 엔진·서버 테스트
 - `docs/` — PRD, 계획, 개발일지, 실험 상태
+
+## 문의·기록
+문제는 GitHub Issues로 남겨 주세요. 개발 과정: `docs/DEVLOG.md`, 하루 종합: `docs/DAY1_SUMMARY.md`.
 
 ## 현재 한계 (DAY 1)
 - 로컬 브라우저 접속은 ERR_CONNECTION_REFUSED(셸 curl은 200, 원인 미확인, docs/evidence/day1-run1/). 브라우저 검증은 공개 미리보기에서 수행.
