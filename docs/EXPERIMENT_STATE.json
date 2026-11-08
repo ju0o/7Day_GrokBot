@@ -54,9 +54,10 @@
   },
   "day1_run5": {
     "implementation_commit": "b9cbeba80d4bb379f43ffecb52f81e0d42112c42",
-    "asset_version": "5072a56fa3de",
-    "tests": "npm test 31/31 pass",
-    "browser_qa": "pending"
+    "asset_version": "b78c5e1d395f",
+    "tests": "npm test 34/34 pass",
+    "browser_qa": "12:08 partial: practice/replay/valid seed PASS; invalid/empty hashchange FAIL -> fixed, recheck pending",
+    "fix_commit": "cb52be047c231e70a00363130987442f160f03f0"
   },
   "day1_complete": true
 }

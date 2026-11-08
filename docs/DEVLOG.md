@@ -151,3 +151,14 @@
 **미확인:** run5 변경의 공개 브라우저 확인 대기.
 
 **하루 종합:** [DAY1_SUMMARY.md](DAY1_SUMMARY.md). 다음 회차는 2026-11-09 DAY2 run1(누적 6).
+
+### DAY 1 · 회차 5 추가 기록 (같은 회차) — 12:08 KST 브라우저 QA와 수정
+**QA(부모 실측, 버전 5072a56fa3de):** PASS — 마우스로 숨기기→다시 보기(연습)→숨기기→7/7 실수 0 완주, 연습 표시, 같은 항로 다시. `#seed=qa_run5-B` 그대로 유지, Ctrl+R 후 같은 항로(R1C1→R1C2→R2C2→R2C1→R3C1→R3C2→R4C2→R4C1). **FAIL** — 같은 탭에서 `#seed=abc<script>`(주소창엔 `abc%3Cscript%3E`)와 `#seed=`로 바꿨을 때 주소는 잘못된 값 그대로, 게임은 이전 `day1-check` 유지. 부분 `abc`로 읽히지는 않음(엄격 파서는 동작). QA 중 클릭 실수로 잠깐 새 시드 `pamc66`가 생겼다가 QA 주소로 되돌아감 — 앱 버그로 보지 않음.
+
+**원인(소스 확인):** 앞선 보고에서 "잘못된 주소는 새 무작위 시드로 시작"이라 했지만 그건 **첫 로드** 경로(`start(seedFromHash() || randomSeed())`)만 해당. 같은 문서에서 해시만 바뀌면 `hashchange` 처리기가 `if (s && s !== state.seed)`로 잘못된 값을 **무시**해 현재 게임과 잘못된 주소가 그대로 남음. 캐시 문제가 아님. 이전 보고의 가정이 틀렸음을 기록.
+
+**결정·수정 (`cb52be047c231e70a00363130987442f160f03f0`):** README대로 잘못된/빈 주소는 첫 로드든 해시 변경이든 **새 무작위 시드로 시작하고 주소를 `#seed=<새 시드>`로 정규화**. 순수 함수 `resolveSeed(hash, currentSeed)`(engine.mjs)로 두 경로를 통합(`syncFromHash`). 같은 시드로의 정규화 주소는 재시작하지 않아 반복 없음. 테스트 3개 추가(잘못된/빈 값 → 새 시드, 유효 시드, 정규화 주소 재해석 시 무재시작). 버전 `5072a56fa3de` → `b78c5e1d395f`.
+
+**테스트(실측):** `npm test` 34/34 통과, `npm run check` 통과(버전 OK). 실제 브라우저 이벤트 테스트는 아님.
+
+**증거:** [연습 완주](evidence/day1-run5/practice-completed.webp) · [유효 시드 qa_run5-B 미리보기](evidence/day1-run5/valid-seed-qa_run5-B-preview.png). 수정 후 브라우저 재확인 대기.
