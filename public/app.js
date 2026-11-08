@@ -1,5 +1,5 @@
-import * as E from './engine.mjs?v=288c1c66b2da';
-import { keyAction, focusAfterMove } from './keys.mjs?v=288c1c66b2da';
+import * as E from './engine.mjs?v=5072a56fa3de';
+import { keyAction, focusAfterMove } from './keys.mjs?v=5072a56fa3de';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -10,7 +10,7 @@ for (let i = 0; i < 25; i++) {
   b.addEventListener('click', () => act(E.select(state, i, performance.now())));
   board.append(b); cells.push(b);
 }
-function seedFromHash() { const m = location.hash.match(/seed=([A-Za-z0-9_-]{1,32})/); return m ? m[1] : null; }
+function seedFromHash() { return E.parseSeedHash(location.hash); }
 function start(seed) {
   state = E.newGame(seed); history.replaceState(null, '', '#seed=' + encodeURIComponent(state.seed)); render();
 }

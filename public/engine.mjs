@@ -89,3 +89,8 @@ export function view(s) {
   return { phase: s.phase, start: s.route[0], goal: s.route.at(-1), path: [...s.path], route: showRoute ? [...s.route] : null, mistakes: s.mistakes, revealed: s.revealed, last: s.last, total: s.route.length };
 }
 export function randomSeed(r = Math.random) { return Math.floor(r() * 36 ** 6).toString(36).padStart(6, '0'); }
+/** Strict share-link parser: only exactly `#seed=<1-32 of A-Z a-z 0-9 _ ->` is accepted; anything else → null (fresh seed). */
+export function parseSeedHash(hash) {
+  const m = /^#seed=([A-Za-z0-9_-]{1,32})$/.exec(typeof hash === 'string' ? hash : '');
+  return m ? m[1] : null;
+}
