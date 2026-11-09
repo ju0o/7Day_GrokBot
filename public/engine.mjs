@@ -132,21 +132,34 @@ export function formatResultLine({ seed, steps, mistakes, ms, scored, best }) {
   if (scored && best) line += ' · 오늘 최고';
   return line;
 }
-/** Pure: decide whether to store a new daily best. Practice never stores. */
+/**
+ * Minimum elapsed ms for a daily best to count.
+ * Decision (DAY2 run4): reject times under 0.1s — UI shows 0.0s and matches automation/accidental
+ * instant finishes after hide, not plausible human play. Practice never stores (scored check).
+ */
+export const MIN_BEST_MS = 100;
+export function isPlausibleStoredBest(best) {
+  return !!best && Number.isInteger(best.mistakes) && Number.isFinite(best.ms) && best.ms >= MIN_BEST_MS && Number.isInteger(best.steps);
+}
+/** Pure: decide whether to store a new daily best. Practice never stores. Implausible times never store. */
 export function bestUpdate(seed, previous, current) {
-  if (!isDailySeed(seed) || !current || !current.scored) return { store: false, best: previous ?? null, isNewBest: false };
-  if (!previous || compareResults(current, previous) < 0)
+  const prevOk = isPlausibleStoredBest(previous) ? previous : null;
+  if (!isDailySeed(seed) || !current || !current.scored) return { store: false, best: prevOk, isNewBest: false };
+  if (!Number.isFinite(current.ms) || current.ms < MIN_BEST_MS)
+    return { store: false, best: prevOk, isNewBest: false, rejected: 'too-fast' };
+  if (!prevOk || compareResults(current, prevOk) < 0)
     return { store: true, best: { mistakes: current.mistakes, ms: current.ms, steps: current.steps }, isNewBest: true };
-  if (compareResults(current, previous) === 0)
-    return { store: false, best: previous, isNewBest: true }; // tie still "오늘 최고"
-  return { store: false, best: previous, isNewBest: false };
+  if (compareResults(current, prevOk) === 0)
+    return { store: false, best: prevOk, isNewBest: true };
+  return { store: false, best: prevOk, isNewBest: false };
 }
 
-/** Meta line for a stored daily best, or null if none. */
+/** Meta line for a stored daily best, or null if none / implausible. */
 export function formatBestLine(best) {
-  if (!best || !Number.isInteger(best.mistakes) || !Number.isFinite(best.ms)) return null;
+  if (!isPlausibleStoredBest(best)) return null;
   return `오늘 최고 실수 ${best.mistakes} · ${(Math.max(0, best.ms) / 1000).toFixed(1)}초`;
 }
+
 /** Shareable hash fragment for a seed, or null if invalid. */
 export function seedHash(seed) {
   const s = String(seed ?? '');

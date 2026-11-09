@@ -1,7 +1,7 @@
-import * as E from './engine.mjs?v=50ac4e6ad2a5';
-import { keyAction, focusAfterMove } from './keys.mjs?v=50ac4e6ad2a5';
-import { loadBest, saveBest } from './store.mjs?v=50ac4e6ad2a5';
-import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=50ac4e6ad2a5';
+import * as E from './engine.mjs?v=412258477c14';
+import { keyAction, focusAfterMove } from './keys.mjs?v=412258477c14';
+import { loadBest, saveBest } from './store.mjs?v=412258477c14';
+import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=412258477c14';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
