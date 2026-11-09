@@ -211,3 +211,18 @@ DAY 1 종료. 다음 회차: 2026-11-09 DAY2 run1(누적 6).
 **스크린샷:** [1 배지 없음](evidence/day2-run1/postfix-day1-check-no-badge.png) · [2 일일 배지](evidence/day2-run1/postfix-daily-badge-visible.png) · [3 새 항로 배지 숨김](evidence/day2-run1/postfix-fresh-seed-badge-hidden.png)
 
 DAY2 run1 완료. 다음: DAY2 run2(누적 7).
+
+## DAY 2 · 회차 2/5 (누적 7/35) — 2026-11-09 21:37 KST~
+**결정:** 난이도 변경은 사람 플레이 근거가 없어 보류. PLAN의 결과 공유 텍스트를 앞당겨, 일일 항로에 붙는 **로컬 최고 기록**과 **결과 복사**를 구현.
+
+**구현 (`b212cb26e37c2fe57b8b9a1ec5489f6ee0160fb8`):**
+- `engine.mjs`: `compareResults`, `formatResultLine`, `bestUpdate`(연습·비일일 시드는 저장 안 함; 실수↑시간 순 비교).
+- `store.mjs`: `localStorage` 키 `afterimage-best:<seed>` 로드/저장(주입 가능, 예외 무시).
+- UI: 완주 시 일일·기록 판이면 「오늘 최고」 표시·저장, **결과 복사** 버튼(클립보드 실패 시 상태란에 문구 표시).
+- 자산 버전 `6ade98ed4b8b` → `17a339ffa0bf`. 해시 대상에 `store.mjs` 포함(토큰 5개).
+
+**테스트(실측):** 토큰 개수 기대값(4→5, missing found 2→3, imports 2→3) 불일치로 2개 실패 → 수정 후 `npm test` 43/43 통과, `npm run check` 통과.
+
+**미확인:** 공개 브라우저 QA 대기.
+
+**다음:** QA 결과 반영. run3는 다음 더.
