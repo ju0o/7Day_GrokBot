@@ -36,3 +36,20 @@ export function focusAfterPhase(phase, how = 'any') {
   if (phase === 'preview' && how === 'reveal') return 'primary';
   return null;
 }
+
+/** Status line for a game view.last code. Uses live mistake count (not a hardcoded 1). */
+export function statusMessage(last, mistakes = 0) {
+  switch (last) {
+    case 'ready': return '◎에서 ★까지 번호 순서로 이어진 항로를 외우세요. 준비되면 숨기기를 누르세요.';
+    case 'recall': return '◎에서 시작해 상하좌우로 한 칸씩 이어 가세요. 방향키도 돼요.';
+    case 'step': return '좋아요, 계속 이어 가세요.';
+    case 'undo': return '한 칸 되돌렸어요.';
+    case 'wrong': return `그 칸은 항로가 아니에요. 실수 ${mistakes}회, 위치는 그대로예요.`;
+    case 'not-adjacent': return '현재 위치와 이웃한 칸만 이동할 수 있어요.';
+    case 'revealed': return '항로를 다시 보여 드려요. 이번 판은 연습 기록으로 남아요.';
+    default: return null;
+  }
+}
+export function statusClass(last) {
+  return last === 'wrong' || last === 'not-adjacent' ? 'bad' : '';
+}

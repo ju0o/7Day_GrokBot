@@ -1,7 +1,7 @@
-import * as E from './engine.mjs?v=5369910a32a3';
-import { keyAction, focusAfterMove } from './keys.mjs?v=5369910a32a3';
-import { loadBest, saveBest } from './store.mjs?v=5369910a32a3';
-import { liveStatusText, cellAriaLabel, focusAfterPhase } from './a11y.mjs?v=5369910a32a3';
+import * as E from './engine.mjs?v=e678c1c8373c';
+import { keyAction, focusAfterMove } from './keys.mjs?v=e678c1c8373c';
+import { loadBest, saveBest } from './store.mjs?v=e678c1c8373c';
+import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=e678c1c8373c';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -25,16 +25,6 @@ function act(next) {
   render(prev);
 }
 const label = (i) => { const [r, c] = E.rc(i); return `${r + 1}행 ${c + 1}열`; };
-const msgs = {
-  ready: ['◎에서 ★까지 번호 순서로 이어진 항로를 외우세요. 준비되면 숨기기를 누르세요.', ''],
-  recall: ['◎에서 시작해 상하좌우로 한 칸씩 이어 가세요. 방향키도 돼요.', ''],
-  step: ['좋아요, 계속 이어 가세요.', ''],
-  undo: ['한 칸 되돌렸어요.', ''],
-  wrong: ['그 칸은 항로가 아니에요. 실수 1회, 위치는 그대로예요.', 'bad'],
-  'not-adjacent': ['현재 위치와 이웃한 칸만 이동할 수 있어요.', 'bad'],
-  revealed: ['항로를 다시 보여 드려요. 이번 판은 연습 기록으로 남아요.', ''],
-  ignored: [null, ''],
-};
 function render() {
   const v = E.view(state);
   const walked = new Set(v.path); const route = v.route ? new Set(v.route) : null;
@@ -78,7 +68,7 @@ function render() {
     }
   } else {
     const share = $('share'); if (share) share.hidden = true;
-    const [m, cls] = msgs[v.last] || msgs.ready; if (m) { st.textContent = lastStatus = liveStatusText(lastStatus, m); st.className = 'status ' + cls; }
+    const m = statusMessage(v.last, v.mistakes); if (m) { st.textContent = lastStatus = liveStatusText(lastStatus, m); st.className = 'status ' + statusClass(v.last); }
   }
   $('primary').hidden = v.phase !== 'preview';
   $('undo').hidden = $('reveal').hidden = v.phase !== 'recall';

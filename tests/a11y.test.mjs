@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { newGame, startRecall, select, view } from '../public/engine.mjs';
-import { liveStatusText, cellAriaLabel, gridMetrics, focusAfterPhase } from '../public/a11y.mjs';
+import { newGame, startRecall, select, view, adjacent } from '../public/engine.mjs';
+import { liveStatusText, cellAriaLabel, gridMetrics, focusAfterPhase, statusMessage, statusClass } from '../public/a11y.mjs';
 test('liveStatusText forces change when message repeats', () => {
   assert.equal(liveStatusText('', '항로가 아니에요'), '항로가 아니에요');
   assert.equal(liveStatusText('항로가 아니에요', '항로가 아니에요'), '항로가 아니에요\u200b');
@@ -19,7 +19,6 @@ test('cellAriaLabel never leaks route order during recall', () => {
     if (i === v.goal) assert.match(lab, /도착점/);
   }
   assert.match(cellAriaLabel(v.path.at(-1), v), /현재 위치/);
-  // after a step, preview labels still must not appear
   s = select(s, s.route[1]);
   const v2 = view(s);
   for (let i = 0; i < 25; i++) assert.doesNotMatch(cellAriaLabel(i, v2), /항로 \d+번째/);
@@ -43,4 +42,25 @@ test('HTML marks live status atomic and grid dimensions; CSS reduces motion', as
   assert.match(html, /aria-colcount="5"/);
   const css = await readFile(new URL('../public/style.css', import.meta.url), 'utf8');
   assert.match(css, /prefers-reduced-motion\s*:\s*reduce/);
+});
+test('wrong status uses current mistake count (not hardcoded 1)', () => {
+  assert.equal(statusMessage('wrong', 1), '그 칸은 항로가 아니에요. 실수 1회, 위치는 그대로예요.');
+  assert.equal(statusMessage('wrong', 2), '그 칸은 항로가 아니에요. 실수 2회, 위치는 그대로예요.');
+  assert.notEqual(statusMessage('wrong', 2), statusMessage('wrong', 1));
+  const a = statusMessage('wrong', 2);
+  assert.equal(liveStatusText(a, a), a + '\u200b');
+  assert.equal(statusClass('wrong'), 'bad');
+});
+test('engine wrong clicks increment mistakes and statusMessage tracks them', () => {
+  let s = startRecall(newGame('a11y-seed'));
+  const end = s.path.at(-1);
+  const wrong = [...Array(25).keys()].find((c) => adjacent(end, c) && c !== s.route[1]);
+  assert.ok(wrong !== undefined);
+  s = select(s, wrong);
+  assert.equal(s.mistakes, 1);
+  assert.equal(statusMessage(s.last, s.mistakes), '그 칸은 항로가 아니에요. 실수 1회, 위치는 그대로예요.');
+  s = select(s, wrong);
+  assert.equal(s.mistakes, 2);
+  assert.equal(statusMessage(s.last, s.mistakes), '그 칸은 항로가 아니에요. 실수 2회, 위치는 그대로예요.');
+  assert.doesNotMatch(statusMessage(s.last, s.mistakes), /실수 1회/);
 });
