@@ -96,7 +96,8 @@
     "implementation_commit": "dc8e9aa7a59cf0c5e1d5051359089fbd1ef18809",
     "asset_version": "4dec932c9361",
     "tests": "npm test 55/55 pass",
-    "browser_qa": "pending"
+    "browser_qa": "23:46 Chrome PASS (too-fast status + practice suffix; best 30.2 kept)",
+    "status": "completed"
   },
   "day2_complete": true
 }
