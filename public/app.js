@@ -1,5 +1,5 @@
-import * as E from './engine.mjs?v=b78c5e1d395f';
-import { keyAction, focusAfterMove } from './keys.mjs?v=b78c5e1d395f';
+import * as E from './engine.mjs?v=fb7c1600bd50';
+import { keyAction, focusAfterMove } from './keys.mjs?v=fb7c1600bd50';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -47,6 +47,9 @@ function render() {
     b.disabled = v.phase !== 'recall';
   });
   $('seed').textContent = state.seed;
+  const daily = E.isDailySeed(state.seed);
+  const badge = $('daily-badge');
+  if (badge) badge.hidden = !daily;
   $('progress').textContent = `진행 ${v.path.length - 1}/${v.total - 1}칸`;
   $('mistakes').textContent = `실수 ${v.mistakes}${v.revealed ? ' · 연습' : ''}`;
   const st = $('status');
@@ -66,6 +69,7 @@ $('undo').onclick = () => act(E.undo(state));
 $('reveal').onclick = () => act(E.reveal(state));
 $('replay').onclick = () => start(state.seed);
 $('fresh').onclick = () => start(E.randomSeed());
+$('daily').onclick = () => start(E.dailySeed());
 function targetKind(el) {
   if (!el || el === document.body) return 'none';
   if (el.classList?.contains('cell')) return 'cell';

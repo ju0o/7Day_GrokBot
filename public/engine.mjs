@@ -104,3 +104,15 @@ export function resolveSeed(hash, currentSeed, makeRandom = randomSeed) {
   if (parsed !== null) return parsed === currentSeed ? { seed: currentSeed, restart: false } : { seed: parsed, restart: true };
   return { seed: makeRandom(), restart: true };
 }
+
+/** Asia/Seoul calendar YYYY-MM-DD for an instant (injectable Date). */
+export function seoulYmd(now = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit',
+  }).formatToParts(now instanceof Date ? now : new Date(now));
+  const g = (t) => parts.find((p) => p.type === t)?.value;
+  return `${g('year')}-${g('month')}-${g('day')}`;
+}
+/** Deterministic daily share seed: daily-YYYY-MM-DD (Seoul calendar). Matches parseSeedHash charset. */
+export function dailySeed(now = new Date()) { return 'daily-' + seoulYmd(now); }
+export function isDailySeed(seed) { return /^daily-\d{4}-\d{2}-\d{2}$/.test(String(seed ?? '')); }

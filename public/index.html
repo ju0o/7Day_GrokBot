@@ -6,7 +6,7 @@
 <meta name="description" content="잔상 항로 — 5×5 지도 위 항로를 잠깐 보고 기억으로 다시 그리는 1분 공간 기억 퍼즐">
 <title>잔상 항로 · Afterimage Route</title>
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="style.css?v=b78c5e1d395f">
+<link rel="stylesheet" href="style.css?v=fb7c1600bd50">
 </head>
 <body>
 <main class="wrap">
@@ -18,6 +18,7 @@
   <section class="panel" aria-label="게임">
     <div class="meta">
       <span>시드 <code id="seed"></code></span>
+      <span id="daily-badge" class="badge" hidden>오늘의 항로</span>
       <span id="progress"></span>
       <span id="mistakes"></span>
     </div>
@@ -29,12 +30,14 @@
       <button id="reveal" class="btn" type="button">다시 보기</button>
       <button id="replay" class="btn" type="button">같은 항로 다시</button>
       <button id="fresh" class="btn" type="button">새 항로</button>
+      <button id="daily" class="btn" type="button">오늘의 항로</button>
     </div>
   </section>
   <details class="help">
     <summary>조작 방법</summary>
     <ul>
       <li>미리보기: ◎(출발)에서 ★(도착)까지 번호 순서대로, 상하좌우로만 이어진 항로가 보여요. 외웠으면 <b>기억했어요, 숨기기</b>.</li>
+      <li><b>오늘의 항로</b>는 Asia/Seoul 날짜 기준 공유 시드(<code>daily-YYYY-MM-DD</code>)예요. 같은 날이면 누구나 같은 항로예요. <b>다시 보기</b>를 쓰면 연습 기록이 돼요.</li>
       <li>복원: ◎에서 시작해 이웃한 칸을 한 칸씩 누르세요. 직전 칸을 다시 누르거나 <b>한 칸 되돌리기</b>로 취소해요.</li>
       <li>항로가 아닌 칸은 실수로 세지만 위치는 그대로예요. 정답 칸은 알려 주지 않아요.</li>
       <li><b>다시 보기</b>를 쓰면 처음부터 다시 하고 이번 판은 ‘연습’으로 표시돼요.</li>
@@ -43,6 +46,6 @@
   </details>
   <footer>계정·서버·광고·분석 없음. 모든 진행은 이 브라우저 안에서만 계산돼요. 시드를 주소 뒤 <code>#seed=</code>로 공유할 수 있어요.</footer>
 </main>
-<script type="module" src="app.js?v=b78c5e1d395f"></script>
+<script type="module" src="app.js?v=fb7c1600bd50"></script>
 </body>
 </html>
