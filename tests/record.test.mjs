@@ -33,3 +33,14 @@ test('store load/save with memory storage', () => {
   assert.equal(loadBest('daily-2026-11-09', { getItem() { throw new Error('x'); } }), null);
   assert.equal(loadBest('daily-2026-11-09', { getItem: () => 'not-json' }), null);
 });
+import { formatBestLine, seedHash, seedShareUrl } from '../public/engine.mjs';
+test('formatBestLine and seedShareUrl', () => {
+  assert.equal(formatBestLine(null), null);
+  assert.equal(formatBestLine({ mistakes: 0, ms: 5900, steps: 7 }), '오늘 최고 실수 0 · 5.9초');
+  assert.equal(formatBestLine({ mistakes: 1, ms: 100, steps: 7 }), '오늘 최고 실수 1 · 0.1초');
+  assert.equal(seedHash('daily-2026-11-09'), '#seed=daily-2026-11-09');
+  assert.equal(seedHash('bad seed'), null);
+  assert.equal(seedShareUrl('day1-check', 'https://ju0o.github.io/7Day_GrokBot/public'), 'https://ju0o.github.io/7Day_GrokBot/public/#seed=day1-check');
+  assert.equal(seedShareUrl('day1-check', 'https://ju0o.github.io/7Day_GrokBot/public/'), 'https://ju0o.github.io/7Day_GrokBot/public/#seed=day1-check');
+  assert.equal(seedShareUrl('day1-check'), '#seed=day1-check');
+});

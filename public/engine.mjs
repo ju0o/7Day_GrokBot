@@ -141,3 +141,21 @@ export function bestUpdate(seed, previous, current) {
     return { store: false, best: previous, isNewBest: true }; // tie still "오늘 최고"
   return { store: false, best: previous, isNewBest: false };
 }
+
+/** Meta line for a stored daily best, or null if none. */
+export function formatBestLine(best) {
+  if (!best || !Number.isInteger(best.mistakes) || !Number.isFinite(best.ms)) return null;
+  return `오늘 최고 실수 ${best.mistakes} · ${(Math.max(0, best.ms) / 1000).toFixed(1)}초`;
+}
+/** Shareable hash fragment for a seed, or null if invalid. */
+export function seedHash(seed) {
+  const s = String(seed ?? '');
+  return parseSeedHash('#seed=' + s) === s ? '#seed=' + s : null;
+}
+/** Absolute or relative share URL: baseUrl (no hash) + #seed=... */
+export function seedShareUrl(seed, baseUrl = '') {
+  const hash = seedHash(seed);
+  if (!hash) return null;
+  if (!baseUrl) return hash;
+  return String(baseUrl).replace(/#.*$/, '').replace(/\/?$/, '/') + hash;
+}

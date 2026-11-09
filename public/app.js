@@ -1,7 +1,7 @@
-import * as E from './engine.mjs?v=e678c1c8373c';
-import { keyAction, focusAfterMove } from './keys.mjs?v=e678c1c8373c';
-import { loadBest, saveBest } from './store.mjs?v=e678c1c8373c';
-import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=e678c1c8373c';
+import * as E from './engine.mjs?v=50ac4e6ad2a5';
+import { keyAction, focusAfterMove } from './keys.mjs?v=50ac4e6ad2a5';
+import { loadBest, saveBest } from './store.mjs?v=50ac4e6ad2a5';
+import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=50ac4e6ad2a5';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -46,6 +46,12 @@ function render() {
   const daily = E.isDailySeed(state.seed);
   const badge = $('daily-badge');
   if (badge) badge.hidden = !daily;
+  const bestEl = $('daily-best');
+  if (bestEl) {
+    const line = daily ? E.formatBestLine(loadBest(state.seed)) : null;
+    bestEl.hidden = !line;
+    bestEl.textContent = line || '';
+  }
   $('progress').textContent = `진행 ${v.path.length - 1}/${v.total - 1}칸`;
   $('mistakes').textContent = `실수 ${v.mistakes}${v.revealed ? ' · 연습' : ''}`;
   const st = $('status');
@@ -57,6 +63,12 @@ function render() {
       const u = E.bestUpdate(state.seed, prev, r);
       if (u.store) saveBest(state.seed, u.best);
       if (u.isNewBest) bestNote = ' · 오늘 최고';
+      const bestEl = $('daily-best');
+      if (bestEl) {
+        const line = E.formatBestLine(loadBest(state.seed));
+        bestEl.hidden = !line;
+        bestEl.textContent = line || '';
+      }
     }
     const doneMsg = `도착! ${r.steps}칸 · ${(r.ms / 1000).toFixed(1)}초 · 실수 ${r.mistakes}회${r.scored ? bestNote : ' (다시 보기 사용 · 연습 기록)'}`;
     st.textContent = lastStatus = liveStatusText(lastStatus, doneMsg);
@@ -80,6 +92,12 @@ $('reveal').onclick = () => act(E.reveal(state));
 $('replay').onclick = () => start(state.seed);
 $('fresh').onclick = () => start(E.randomSeed());
 $('daily').onclick = () => start(E.dailySeed());
+$('copy-seed').onclick = async () => {
+  const base = location.origin + location.pathname.replace(/\/[^/]*$/, '/');
+  const out = E.seedShareUrl(state.seed, base) || '';
+  try { await navigator.clipboard.writeText(out); lastStatus = liveStatusText(lastStatus, '시드 주소를 복사했어요.'); $('status').textContent = lastStatus; $('status').className = 'status ok'; }
+  catch { lastStatus = liveStatusText(lastStatus, out); $('status').textContent = lastStatus; $('status').className = 'status'; }
+};
 $('share').onclick = async () => {
   const line = $('share').dataset.line || '';
   try { await navigator.clipboard.writeText(line); lastStatus = liveStatusText(lastStatus, '결과 문구를 복사했어요.'); $('status').textContent = lastStatus; $('status').className = 'status ok'; }
