@@ -39,7 +39,7 @@ npm run check  # 구문 검사
 - `docs/` — PRD, 계획, 개발일지, 실험 상태
 
 ## 문의·기록
-문제는 GitHub Issues로 남겨 주세요. 개발 과정: `docs/DEVLOG.md`, 하루 종합: `docs/DAY1_SUMMARY.md`.
+문제는 GitHub Issues로 남겨 주세요. 개발 과정: `docs/DEVLOG.md`, 하루 종합: `docs/DAY1_SUMMARY.md`, `docs/DAY2_SUMMARY.md`.
 
 ## 현재 한계 (DAY 1)
 - 로컬 브라우저 접속은 ERR_CONNECTION_REFUSED(셸 curl은 200, 원인 미확인, docs/evidence/day1-run1/). 브라우저 검증은 공개 미리보기에서 수행.
