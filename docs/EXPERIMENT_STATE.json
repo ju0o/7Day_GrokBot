@@ -86,8 +86,9 @@
   },
   "day2_run4": {
     "implementation_commit": "a54712cd32ae1d9a4bd218a608ff90fe9fa32f5e",
-    "asset_version": "50ac4e6ad2a5",
-    "tests": "npm test 51/51 pass",
-    "browser_qa": "pending"
+    "asset_version": "412258477c14",
+    "tests": "npm test 54/54 pass",
+    "browser_qa": "23:23 PASS seed-copy; UNEXPECTED 0.0 best -> reject <100ms fix; recheck pending",
+    "fix_commit": "e470d8b632e41c318c25e9850608818728a73b59"
   }
 }
