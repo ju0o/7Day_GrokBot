@@ -268,3 +268,12 @@ run2 완료. 다음: DAY2 run3(누적 8).
 **테스트:** 50/50 통과. **스크린샷:** step2 저장 실패(ENOENT)로 미보관. [완주·replay 포커스](evidence/day2-run3/completion-focus-replay.png)만 있음.
 
 **재확인 대기.**
+
+### DAY 2 · 회차 3 수정 후 재확인 (같은 회차, 22:07 KST)
+주소 `…/public/?qa=e678c1c8373c` (Chrome). 수정 `93a3118`, 문서 `cf5fb7e`.
+
+**PASS (실측):** 같은 틀린 칸(3행 3열) 1회 → 상태 「실수 1회」·`#mistakes` 「실수 1」; 2회 → 「실수 2회」·「실수 2」.
+
+**증거 메모:** 첫 QA 캡처 중 일부는 타이밍 때문에 헤더 「실수 0」으로 보인 적이 있음(잘못된 상태 스냅샷). 이후 실제 데스크톱 스크린샷은 헤더 「시드 day1-check 진행 0/7칸 실수 2」와 상태 「실수 2회」를 확인함 → [실수 2회](evidence/day2-run3/postfix-wrong-cell-mistake-2.webp).
+
+run3 완료. 다음: DAY2 run4(누적 9).
