@@ -21,6 +21,6 @@ test('cache-busting version is consistent across html and module imports (avoids
   const v = html.match(/app\.js\?v=([\w-]+)/)[1];
   assert.match(html, new RegExp(`style\\.css\\?v=${v}"`));
   const imports = [...app.matchAll(/from '\.\/([\w.]+)\?v=([\w-]+)'/g)];
-  assert.equal(imports.length, 2);
+  assert.equal(imports.length, 3);
   for (const m of imports) assert.equal(m[2], v, m[1]);
 });

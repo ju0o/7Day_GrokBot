@@ -6,7 +6,7 @@ const real = await loadPublic();
 test('committed public files carry the source-derived version', () => {
   const r = checkContents(real);
   assert.deepEqual(r.problems, []);
-  assert.equal(r.found.length, 4);
+  assert.equal(r.found.length, 5);
 });
 test('any runtime content change without re-versioning is detected as stale', () => {
   for (const f of FILES) {
@@ -25,10 +25,10 @@ test('mixed tokens and missing tokens are flagged', () => {
   const mixed = { ...real, 'app.js': real['app.js'].replace(/\?v=[\w-]*/, '?v=deadbeef') };
   assert.equal(checkContents(mixed).ok, false);
   const none = { ...real, 'index.html': real['index.html'].replace(/\?v=[\w-]*/g, '') };
-  assert.match(checkContents(none).problems.join(), /found 2/);
+  assert.match(checkContents(none).problems.join(), /found 3/);
 });
 test('resource graph: every public runtime file is covered by the hash', async () => {
   const files = (await readdir(new URL('../public/', import.meta.url))).sort();
   assert.deepEqual(files, [...FILES].sort());
-  for (const f of ['engine.mjs', 'keys.mjs']) assert.doesNotMatch(real[f], /^\s*import\s/m, f + ' must stay leaf module');
+  for (const f of ['engine.mjs', 'keys.mjs', 'store.mjs']) assert.doesNotMatch(real[f], /^\s*import\s/m, f + ' must stay leaf module');
 });

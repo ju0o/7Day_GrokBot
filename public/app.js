@@ -1,5 +1,6 @@
-import * as E from './engine.mjs?v=6ade98ed4b8b';
-import { keyAction, focusAfterMove } from './keys.mjs?v=6ade98ed4b8b';
+import * as E from './engine.mjs?v=17a339ffa0bf';
+import { keyAction, focusAfterMove } from './keys.mjs?v=17a339ffa0bf';
+import { loadBest, saveBest } from './store.mjs?v=17a339ffa0bf';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -55,9 +56,22 @@ function render() {
   const st = $('status');
   if (v.phase === 'done') {
     const r = E.result(state);
-    st.textContent = `도착! ${r.steps}칸 · ${(r.ms / 1000).toFixed(1)}초 · 실수 ${r.mistakes}회${r.scored ? '' : ' (다시 보기 사용 · 연습 기록)'}`;
+    let bestNote = '';
+    if (r.scored && E.isDailySeed(state.seed)) {
+      const prev = loadBest(state.seed);
+      const u = E.bestUpdate(state.seed, prev, r);
+      if (u.store) saveBest(state.seed, u.best);
+      if (u.isNewBest) bestNote = ' · 오늘 최고';
+    }
+    st.textContent = `도착! ${r.steps}칸 · ${(r.ms / 1000).toFixed(1)}초 · 실수 ${r.mistakes}회${r.scored ? bestNote : ' (다시 보기 사용 · 연습 기록)'}`;
     st.className = 'status ok';
+    const share = $('share');
+    if (share) {
+      share.hidden = false;
+      share.dataset.line = E.formatResultLine({ seed: state.seed, ...r, best: !!bestNote });
+    }
   } else {
+    const share = $('share'); if (share) share.hidden = true;
     const [m, cls] = msgs[v.last] || msgs.ready; if (m) { st.textContent = m; st.className = 'status ' + cls; }
   }
   $('primary').hidden = v.phase !== 'preview';
@@ -70,6 +84,11 @@ $('reveal').onclick = () => act(E.reveal(state));
 $('replay').onclick = () => start(state.seed);
 $('fresh').onclick = () => start(E.randomSeed());
 $('daily').onclick = () => start(E.dailySeed());
+$('share').onclick = async () => {
+  const line = $('share').dataset.line || '';
+  try { await navigator.clipboard.writeText(line); $('status').textContent = '결과 문구를 복사했어요.'; $('status').className = 'status ok'; }
+  catch { $('status').textContent = line; $('status').className = 'status'; }
+};
 function targetKind(el) {
   if (!el || el === document.body) return 'none';
   if (el.classList?.contains('cell')) return 'cell';

@@ -116,3 +116,28 @@ export function seoulYmd(now = new Date()) {
 /** Deterministic daily share seed: daily-YYYY-MM-DD (Seoul calendar). Matches parseSeedHash charset. */
 export function dailySeed(now = new Date()) { return 'daily-' + seoulYmd(now); }
 export function isDailySeed(seed) { return /^daily-\d{4}-\d{2}-\d{2}$/.test(String(seed ?? '')); }
+
+/** Compare scored results: fewer mistakes wins; then less time. Returns -1 if a better, 1 if b better, 0 tie. */
+export function compareResults(a, b) {
+  if (!a || !b) return a ? -1 : b ? 1 : 0;
+  if (a.mistakes !== b.mistakes) return a.mistakes < b.mistakes ? -1 : 1;
+  if (a.ms !== b.ms) return a.ms < b.ms ? -1 : 1;
+  return 0;
+}
+/** Korean share/summary line for a finished scored or practice run. */
+export function formatResultLine({ seed, steps, mistakes, ms, scored, best }) {
+  const sec = (Math.max(0, ms) / 1000).toFixed(1);
+  const mode = scored ? '기록' : '연습';
+  let line = `잔상 항로 · ${seed} · ${steps}칸 · ${sec}초 · 실수 ${mistakes}회 · ${mode}`;
+  if (scored && best) line += ' · 오늘 최고';
+  return line;
+}
+/** Pure: decide whether to store a new daily best. Practice never stores. */
+export function bestUpdate(seed, previous, current) {
+  if (!isDailySeed(seed) || !current || !current.scored) return { store: false, best: previous ?? null, isNewBest: false };
+  if (!previous || compareResults(current, previous) < 0)
+    return { store: true, best: { mistakes: current.mistakes, ms: current.ms, steps: current.steps }, isNewBest: true };
+  if (compareResults(current, previous) === 0)
+    return { store: false, best: previous, isNewBest: true }; // tie still "오늘 최고"
+  return { store: false, best: previous, isNewBest: false };
+}
