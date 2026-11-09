@@ -197,3 +197,17 @@ DAY 1 종료. 다음 회차: 2026-11-09 DAY2 run1(누적 6).
 **수정 (`dc1daf2ed47125dfb6b482df72cf075e83a08612`):** `.badge[hidden]{display:none}` 추가. 회귀 테스트 2개(CSS 규칙 존재, `isDailySeed`로 배지 판단). 버전 `fb7c1600bd50` → `6ade98ed4b8b`.
 
 **테스트:** `npm test` 39/39 통과, `npm run check` 통과. **브라우저 재확인 대기.**
+
+### DAY 2 · 회차 1 수정 후 재확인 (같은 회차, 21:35 KST)
+주소 `…/public/?qa=6ade98ed4b8b` (Chrome). 수정 `dc1daf2`, 문서 `8be4403`.
+
+**PASS (실측):**
+1. `#seed=day1-check` 첫 로드 — 헤더 「시드 day1-check | 진행 0/7칸 | 실수 0」, 배지 없음.
+2. 「오늘의 항로」 — 시드 `daily-2026-11-09`, 배지 표시, 해시 `#seed=daily-2026-11-09`.
+3. 「새 항로」 — 시드 `86gz2w`, 배지 숨김, 해시 갱신.
+
+앞선 QA(`fb7c1600bd50`)에서 이미 PASS: F5 동일 항로, 다시 보기 「연습」·7/7 실수 0 완주. 재확인 중 DevTools 360px 에뮬레이션을 켠 채면 클릭이 먹통이었고, 끄고 재확인함(앱 버그로 보지 않음).
+
+**스크린샷:** [1 배지 없음](evidence/day2-run1/postfix-day1-check-no-badge.png) · [2 일일 배지](evidence/day2-run1/postfix-daily-badge-visible.png) · [3 새 항로 배지 숨김](evidence/day2-run1/postfix-fresh-seed-badge-hidden.png)
+
+DAY2 run1 완료. 다음: DAY2 run2(누적 7).

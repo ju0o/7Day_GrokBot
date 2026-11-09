@@ -65,7 +65,8 @@
     "implementation_commit": "f67f632cbfe197e35152379adbe12945f95465a1",
     "asset_version": "6ade98ed4b8b",
     "tests": "npm test 39/39 pass",
-    "browser_qa": "QA FAIL badge on non-daily -> CSS fix 6ade98ed4b8b; recheck pending",
-    "fix_commit": "dc1daf2ed47125dfb6b482df72cf075e83a08612"
+    "browser_qa": "21:35 Chrome recheck PASS (badge hide/show/hide; earlier F5+practice PASS); completed",
+    "fix_commit": "dc1daf2ed47125dfb6b482df72cf075e83a08612",
+    "status": "completed"
   }
 }
