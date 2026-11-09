@@ -1,14 +1,19 @@
-import * as E from './engine.mjs?v=17a339ffa0bf';
-import { keyAction, focusAfterMove } from './keys.mjs?v=17a339ffa0bf';
-import { loadBest, saveBest } from './store.mjs?v=17a339ffa0bf';
+import * as E from './engine.mjs?v=5369910a32a3';
+import { keyAction, focusAfterMove } from './keys.mjs?v=5369910a32a3';
+import { loadBest, saveBest } from './store.mjs?v=5369910a32a3';
+import { liveStatusText, cellAriaLabel, focusAfterPhase } from './a11y.mjs?v=5369910a32a3';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
+let lastStatus = '';
 const cells = [];
 for (let i = 0; i < 25; i++) {
   const b = document.createElement('button');
+  const [rr, cc] = E.rc(i);
   b.type = 'button'; b.className = 'cell'; b.setAttribute('role', 'gridcell');
-  b.addEventListener('click', () => act(E.select(state, i, performance.now())));
+  b.setAttribute('aria-rowindex', String(rr + 1));
+  b.setAttribute('aria-colindex', String(cc + 1));
+  b.addEventListener('click', () => { act(E.select(state, i, performance.now())); const f = focusAfterPhase(state.phase); if (f === 'head') cells[E.view(state).path.at(-1)].focus(); else if (f === 'replay') $('replay').focus(); });
   board.append(b); cells.push(b);
 }
 function start(seed) {
@@ -36,15 +41,15 @@ function render() {
   const head = v.path.at(-1);
   cells.forEach((b, i) => {
     b.className = 'cell';
-    let sym = '', desc = label(i);
-    if (i === v.start) { b.classList.add('start'); sym = '◎'; desc += ', 출발점'; }
-    if (i === v.goal) { b.classList.add('goal'); sym = '★'; desc += ', 도착점'; }
-    if (route && route.has(i)) { b.classList.add('route'); if (v.phase === 'preview') desc += `, 항로 ${v.route.indexOf(i) + 1}번째`; }
-    if (v.phase !== 'preview' && walked.has(i)) { b.classList.add('walked'); desc += ', 지나온 칸'; }
-    if (v.phase === 'recall' && i === head) { b.classList.add('head'); desc += ', 현재 위치'; }
+    let sym = '';
+    if (i === v.start) { b.classList.add('start'); sym = '◎'; }
+    if (i === v.goal) { b.classList.add('goal'); sym = '★'; }
+    if (route && route.has(i)) b.classList.add('route');
+    if (v.phase !== 'preview' && walked.has(i)) b.classList.add('walked');
+    if (v.phase === 'recall' && i === head) b.classList.add('head');
     b.textContent = sym;
     if (v.phase === 'preview' && route && route.has(i) && !sym) { const n = document.createElement('span'); n.className = 'n'; n.textContent = v.route.indexOf(i) + 1; b.append(n); }
-    b.setAttribute('aria-label', desc);
+    b.setAttribute('aria-label', cellAriaLabel(i, v));
     b.disabled = v.phase !== 'recall';
   });
   $('seed').textContent = state.seed;
@@ -63,7 +68,8 @@ function render() {
       if (u.store) saveBest(state.seed, u.best);
       if (u.isNewBest) bestNote = ' · 오늘 최고';
     }
-    st.textContent = `도착! ${r.steps}칸 · ${(r.ms / 1000).toFixed(1)}초 · 실수 ${r.mistakes}회${r.scored ? bestNote : ' (다시 보기 사용 · 연습 기록)'}`;
+    const doneMsg = `도착! ${r.steps}칸 · ${(r.ms / 1000).toFixed(1)}초 · 실수 ${r.mistakes}회${r.scored ? bestNote : ' (다시 보기 사용 · 연습 기록)'}`;
+    st.textContent = lastStatus = liveStatusText(lastStatus, doneMsg);
     st.className = 'status ok';
     const share = $('share');
     if (share) {
@@ -72,13 +78,13 @@ function render() {
     }
   } else {
     const share = $('share'); if (share) share.hidden = true;
-    const [m, cls] = msgs[v.last] || msgs.ready; if (m) { st.textContent = m; st.className = 'status ' + cls; }
+    const [m, cls] = msgs[v.last] || msgs.ready; if (m) { st.textContent = lastStatus = liveStatusText(lastStatus, m); st.className = 'status ' + cls; }
   }
   $('primary').hidden = v.phase !== 'preview';
   $('undo').hidden = $('reveal').hidden = v.phase !== 'recall';
   $('undo').disabled = v.path.length < 2;
 }
-$('primary').onclick = () => { act(E.startRecall(state, performance.now())); cells[E.view(state).path.at(-1)].focus(); };
+$('primary').onclick = () => { act(E.startRecall(state, performance.now())); const f = focusAfterPhase(state.phase); if (f === 'head') cells[E.view(state).path.at(-1)].focus(); };
 $('undo').onclick = () => act(E.undo(state));
 $('reveal').onclick = () => act(E.reveal(state));
 $('replay').onclick = () => start(state.seed);
@@ -86,8 +92,8 @@ $('fresh').onclick = () => start(E.randomSeed());
 $('daily').onclick = () => start(E.dailySeed());
 $('share').onclick = async () => {
   const line = $('share').dataset.line || '';
-  try { await navigator.clipboard.writeText(line); $('status').textContent = '결과 문구를 복사했어요.'; $('status').className = 'status ok'; }
-  catch { $('status').textContent = line; $('status').className = 'status'; }
+  try { await navigator.clipboard.writeText(line); lastStatus = liveStatusText(lastStatus, '결과 문구를 복사했어요.'); $('status').textContent = lastStatus; $('status').className = 'status ok'; }
+  catch { lastStatus = liveStatusText(lastStatus, line); $('status').textContent = lastStatus; $('status').className = 'status'; }
 };
 function targetKind(el) {
   if (!el || el === document.body) return 'none';

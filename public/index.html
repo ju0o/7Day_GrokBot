@@ -6,7 +6,7 @@
 <meta name="description" content="잔상 항로 — 5×5 지도 위 항로를 잠깐 보고 기억으로 다시 그리는 1분 공간 기억 퍼즐">
 <title>잔상 항로 · Afterimage Route</title>
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="style.css?v=17a339ffa0bf">
+<link rel="stylesheet" href="style.css?v=5369910a32a3">
 </head>
 <body>
 <main class="wrap">
@@ -22,8 +22,8 @@
       <span id="progress"></span>
       <span id="mistakes"></span>
     </div>
-    <div id="board" class="board" role="grid" aria-label="5×5 항로 지도"></div>
-    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <div id="board" class="board" role="grid" aria-label="5×5 항로 지도" aria-rowcount="5" aria-colcount="5" aria-describedby="status"></div>
+    <p id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></p>
     <div class="actions">
       <button id="primary" class="btn primary" type="button">기억했어요, 숨기기</button>
       <button id="undo" class="btn" type="button">한 칸 되돌리기</button>
@@ -42,11 +42,12 @@
       <li>복원: ◎에서 시작해 이웃한 칸을 한 칸씩 누르세요. 직전 칸을 다시 누르거나 <b>한 칸 되돌리기</b>로 취소해요.</li>
       <li>항로가 아닌 칸은 실수로 세지만 위치는 그대로예요. 정답 칸은 알려 주지 않아요.</li>
       <li><b>다시 보기</b>를 쓰면 처음부터 다시 하고 이번 판은 ‘연습’으로 표시돼요.</li>
+      <li>시스템「움직임 줄이기」가 켜져 있으면 흔들림 애니메이션을 쓰지 않아요.</li>
       <li>키보드: 방향키 이동 · Backspace 되돌리기 · R 새 항로. Enter/Space는 포커스된 버튼을 눌러요. 아무 버튼에도 포커스가 없을 때 Enter는 미리보기에서 숨기기, 완료 후 같은 항로 다시예요.</li>
     </ul>
   </details>
   <footer>계정·서버·광고·분석 없음. 모든 진행은 이 브라우저 안에서만 계산돼요. 시드를 주소 뒤 <code>#seed=</code>로 공유할 수 있어요.</footer>
 </main>
-<script type="module" src="app.js?v=17a339ffa0bf"></script>
+<script type="module" src="app.js?v=5369910a32a3"></script>
 </body>
 </html>

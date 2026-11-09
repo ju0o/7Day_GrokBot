@@ -4,7 +4,7 @@
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-export const FILES = ['index.html', 'app.js', 'engine.mjs', 'keys.mjs', 'store.mjs', 'style.css'];
+export const FILES = ['index.html', 'app.js', 'engine.mjs', 'keys.mjs', 'store.mjs', 'a11y.mjs', 'style.css'];
 export const TOKEN = /\?v=[\w-]*/g;
 export const normalize = (text) => text.replace(TOKEN, '?v=');
 export function computeVersion(contents /* {name: text} */) {
@@ -17,7 +17,7 @@ export function checkContents(contents) {
   const expected = computeVersion(contents);
   const found = [...tokensIn(contents['index.html'] ?? ''), ...tokensIn(contents['app.js'] ?? '')];
   const problems = [];
-  if (found.length < 5) problems.push(`expected >=5 version tokens, found ${found.length}`);
+  if (found.length < 6) problems.push(`expected >=5 version tokens, found ${found.length}`);
   for (const t of found) if (t !== expected) problems.push(`stale token ${t} (expected ${expected})`);
   return { expected, found, ok: problems.length === 0, problems };
 }
