@@ -242,3 +242,18 @@ DAY2 run1 완료. 다음: DAY2 run2(누적 7).
 **스크린샷:** [오늘 최고 완주](evidence/day2-run2/daily-best-completion.png) · [복사 상태](evidence/day2-run2/share-copy-status.png) · [비일일](evidence/day2-run2/non-daily-no-best.png)
 
 run2 완료. 다음: DAY2 run3(누적 8).
+
+## DAY 2 · 회차 3/5 (누적 8/35) — 2026-11-09 21:59 KST~
+**결정:** PLAN의 접근성 항목을 앞당김. 이미 PASS한 플레이 흐름은 재점검하지 않고, **자동 검증 가능한** aria-live·격자 라벨·reduced-motion·포커스 규칙을 보강.
+
+**구현 (`03cf820caf6e073c8d067bc3a0ceacb6da400a92`):**
+- `a11y.mjs`: `liveStatusText`(같은 문구 재낭독용 ZWSP), `cellAriaLabel`(복원 중 항로 순서 미포함), `gridMetrics`, `focusAfterPhase`.
+- HTML: status `aria-atomic="true"`, board `aria-rowcount/colcount`, `aria-describedby="status"`.
+- 칸 `aria-rowindex/colindex`, 라벨을 `cellAriaLabel`로 통일. 마우스 완주 후에도 replay로 포커스. 조작 방법에 움직임 줄이기 안내.
+- 버전 `17a339ffa0bf` → `5369910a32a3`.
+
+**테스트:** `npm test` 48/48 통과, `npm run check` 통과.
+
+**미확인:** 실제 스크린리더·실기기 브라우저 QA 대기(자동 테스트는 DOM 이벤트/스크린리더 엔진이 아님).
+
+**다음:** QA 결과 반영. run4는 다음 더.
