@@ -23,3 +23,15 @@ test('same Seoul day yields same daily seed across hours', () => {
   assert.equal(dailySeed(new Date('2026-11-09T00:00:00+09:00')), dailySeed(new Date('2026-11-09T23:59:59+09:00')));
   assert.notEqual(dailySeed(new Date('2026-11-09T23:59:59+09:00')), dailySeed(new Date('2026-11-10T00:00:00+09:00')));
 });
+import { readFile } from 'node:fs/promises';
+test('CSS must hide .badge[hidden] (class display:inline-block otherwise overrides HTML hidden)', async () => {
+  const css = await readFile(new URL('../public/style.css', import.meta.url), 'utf8');
+  assert.match(css, /\.badge\[hidden\]\s*\{\s*display\s*:\s*none\s*;?\s*\}/);
+  // without that rule, .badge{display:inline-block} wins over UA [hidden]{display:none}
+  assert.match(css, /\.badge\{[^}]*display\s*:\s*inline-block/);
+});
+test('daily badge visibility follows isDailySeed only', () => {
+  assert.equal(isDailySeed('daily-2026-11-09'), true);
+  assert.equal(isDailySeed('day1-check'), false);
+  assert.equal(isDailySeed('83mgep'), false);
+});
