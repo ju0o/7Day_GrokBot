@@ -73,6 +73,7 @@
     "implementation_commit": "b212cb26e37c2fe57b8b9a1ec5489f6ee0160fb8",
     "asset_version": "17a339ffa0bf",
     "tests": "npm test 43/43 pass",
-    "browser_qa": "pending"
+    "browser_qa": "21:41 Chrome PASS (daily best, copy, practice no-best, non-daily no-best); 0.0s from fast automation noted",
+    "status": "completed"
   }
 }
