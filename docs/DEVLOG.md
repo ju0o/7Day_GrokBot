@@ -188,3 +188,12 @@ DAY 1 종료. 다음 회차: 2026-11-09 DAY2 run1(누적 6).
 **미확인:** 공개 주소 브라우저 QA(오늘의 항로 버튼·배지·시드 공유) 대기. 스크린리더·실기기 미확인.
 
 **다음 우선순위:** 브라우저 QA 결과 반영 → (근거 생기면) 난이도·길이.
+
+### DAY 2 · 회차 1 추가 기록 (같은 회차) — 브라우저 QA와 배지 수정 (21:33 KST~)
+**QA (Chrome, `?qa=fb7c1600bd50`):** PASS — 오늘의 항로 → 시드 `daily-2026-11-09`·배지·해시, F5 동일 항로, 다시 보기 → 「실수 0 · 연습」·완주 연습 기록. **FAIL** — 배지가 비일일 시드에도 보임(`#seed=day1-check` 첫 로드, 「새 항로」 후 `83mgep`).
+
+**원인(소스 확인):** `app.js`의 `badge.hidden = !daily`는 정상. CSS `.badge{display:inline-block}`이 UA의 `[hidden]{display:none}`보다 이겨 숨김이 무시됨. 버튼은 이미 `.btn[hidden]{display:none}`이 있었으나 배지에는 없음.
+
+**수정 (`dc1daf2ed47125dfb6b482df72cf075e83a08612`):** `.badge[hidden]{display:none}` 추가. 회귀 테스트 2개(CSS 규칙 존재, `isDailySeed`로 배지 판단). 버전 `fb7c1600bd50` → `6ade98ed4b8b`.
+
+**테스트:** `npm test` 39/39 통과, `npm run check` 통과. **브라우저 재확인 대기.**
