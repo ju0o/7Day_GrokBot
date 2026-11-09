@@ -9,21 +9,22 @@
   "total_runs": 35,
   "initial_prompt_counted": false,
   "runs_by_date": {
-    "2026-11-08": 5
+    "2026-11-08": 5,
+    "2026-11-09": 1
   },
-  "cumulative_runs": 5,
+  "cumulative_runs": 6,
   "last_run": {
-    "day": 1,
-    "run": 5,
+    "day": 2,
+    "run": 1,
     "status": "completed",
-    "started": "2026-11-08 12:01 KST"
+    "started": "2026-11-09 21:28 KST"
   },
   "next_run": {
     "day": 2,
-    "run": 1,
+    "run": 2,
     "date": "2026-11-09",
-    "cumulative": 6,
-    "note": "DAY1 5회 소진. 11-08 추가 더는 회차를 진행하지 않음"
+    "cumulative": 7,
+    "note": "같은 날 다음 더"
   },
   "notion_url": "https://app.notion.com/p/411000b759dc81959f77fccd727a45ae",
   "day1_run1": {
@@ -59,5 +60,11 @@
     "browser_qa": "12:08 partial (invalid hashchange FAIL) -> fixed cb52be0 -> 12:12 Chrome recheck PASS; screenreader/real devices/other browsers untested",
     "fix_commit": "cb52be047c231e70a00363130987442f160f03f0"
   },
-  "day1_complete": true
+  "day1_complete": true,
+  "day2_run1": {
+    "implementation_commit": "f67f632cbfe197e35152379adbe12945f95465a1",
+    "asset_version": "fb7c1600bd50",
+    "tests": "npm test 37/37 pass",
+    "browser_qa": "pending"
+  }
 }
