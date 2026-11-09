@@ -76,3 +76,12 @@ test('loadBest drops and removes implausible 0ms records', () => {
   saveBest('daily-2026-11-09', { mistakes: 0, ms: 5900, steps: 7 }, mem);
   assert.deepEqual(loadBest('daily-2026-11-09', mem), { mistakes: 0, ms: 5900, steps: 7 });
 });
+test('completionStatusExtra explains too-fast daily runs', () => {
+  const scored = { steps: 7, mistakes: 0, ms: 0, scored: true };
+  const u = E.bestUpdate('daily-2026-11-09', { mistakes: 0, ms: 30200, steps: 7 }, scored);
+  assert.equal(u.rejected, 'too-fast');
+  assert.equal(E.completionStatusExtra('daily-2026-11-09', scored, u), ' · 0.1초 미만이라 오늘 최고에 넣지 않았어요');
+  assert.equal(E.completionStatusExtra('daily-2026-11-09', { ...scored, ms: 30200, scored: true }, { isNewBest: true }), ' · 오늘 최고');
+  assert.equal(E.completionStatusExtra('x', { ...scored, scored: false }, null), ' (다시 보기 사용 · 연습 기록)');
+  assert.equal(E.completionStatusExtra('day1-check', scored, { rejected: 'too-fast' }), '');
+});

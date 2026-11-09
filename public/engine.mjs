@@ -154,6 +154,19 @@ export function bestUpdate(seed, previous, current) {
   return { store: false, best: prevOk, isNewBest: false };
 }
 
+/**
+ * Extra suffix for the arrival status line (after time/mistakes).
+ * Practice, today-best, or too-fast rejection for daily scored runs.
+ */
+export function completionStatusExtra(seed, result, bestUpdateResult) {
+  if (!result) return '';
+  if (!result.scored) return ' (다시 보기 사용 · 연습 기록)';
+  if (bestUpdateResult?.isNewBest) return ' · 오늘 최고';
+  if (bestUpdateResult?.rejected === 'too-fast' && isDailySeed(seed))
+    return ' · 0.1초 미만이라 오늘 최고에 넣지 않았어요';
+  return '';
+}
+
 /** Meta line for a stored daily best, or null if none / implausible. */
 export function formatBestLine(best) {
   if (!isPlausibleStoredBest(best)) return null;

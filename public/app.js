@@ -1,7 +1,7 @@
-import * as E from './engine.mjs?v=412258477c14';
-import { keyAction, focusAfterMove } from './keys.mjs?v=412258477c14';
-import { loadBest, saveBest } from './store.mjs?v=412258477c14';
-import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=412258477c14';
+import * as E from './engine.mjs?v=4dec932c9361';
+import { keyAction, focusAfterMove } from './keys.mjs?v=4dec932c9361';
+import { loadBest, saveBest } from './store.mjs?v=4dec932c9361';
+import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=4dec932c9361';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -57,26 +57,28 @@ function render() {
   const st = $('status');
   if (v.phase === 'done') {
     const r = E.result(state);
-    let bestNote = '';
+    let u = null;
     if (r.scored && E.isDailySeed(state.seed)) {
       const prev = loadBest(state.seed);
-      const u = E.bestUpdate(state.seed, prev, r);
+      u = E.bestUpdate(state.seed, prev, r);
       if (u.store) saveBest(state.seed, u.best);
-      if (u.isNewBest) bestNote = ' · 오늘 최고';
       const bestEl = $('daily-best');
       if (bestEl) {
         const line = E.formatBestLine(loadBest(state.seed));
         bestEl.hidden = !line;
         bestEl.textContent = line || '';
       }
+    } else if (!r.scored) {
+      u = { isNewBest: false };
     }
-    const doneMsg = `도착! ${r.steps}칸 · ${(r.ms / 1000).toFixed(1)}초 · 실수 ${r.mistakes}회${r.scored ? bestNote : ' (다시 보기 사용 · 연습 기록)'}`;
+    const extra = E.completionStatusExtra(state.seed, r, u);
+    const doneMsg = `도착! ${r.steps}칸 · ${(r.ms / 1000).toFixed(1)}초 · 실수 ${r.mistakes}회${extra}`;
     st.textContent = lastStatus = liveStatusText(lastStatus, doneMsg);
     st.className = 'status ok';
     const share = $('share');
     if (share) {
       share.hidden = false;
-      share.dataset.line = E.formatResultLine({ seed: state.seed, ...r, best: !!bestNote });
+      share.dataset.line = E.formatResultLine({ seed: state.seed, ...r, best: !!u?.isNewBest });
     }
   } else {
     const share = $('share'); if (share) share.hidden = true;
