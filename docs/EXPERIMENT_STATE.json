@@ -78,8 +78,9 @@
   },
   "day2_run3": {
     "implementation_commit": "03cf820caf6e073c8d067bc3a0ceacb6da400a92",
-    "asset_version": "5369910a32a3",
-    "tests": "npm test 48/48 pass",
-    "browser_qa": "pending"
+    "asset_version": "e678c1c8373c",
+    "tests": "npm test 50/50 pass",
+    "browser_qa": "22:03 QA mostly PASS; wrong-status count FAIL -> fixed e678c1c8373c; recheck pending",
+    "fix_commit": "93a31183daac807fc8a02b980a3b0b12e64edb06"
   }
 }
