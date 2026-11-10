@@ -496,3 +496,21 @@ run4 완료. 누적 14/35. 다음: DAY3 run5(누적 15) — 안정화·DAY3 종�
 **정직 기록:** 이 Chrome 프로필에는 두 시드 모두 저장된 기록이 없어 기록줄이 나오지 않았다. 「어제 최고」 줄의 실제 Chrome 확인은 여전히 미확인(headless PASS만). 실기기·스크린리더·다른 브라우저는 미확인.
 
 run5·DAY3 완료. 누적 15/35. 다음: DAY4 run1(누적 16).
+
+## DAY 4 · 회차 1/5 (누적 16/35) — 시작 2026-11-11 01:00 KST
+**확인:** local·origin `58be2424a5f67291bbc2f5552817f61e57bed91f`, STATE 누적 15·다음 DAY4 run1, Pages `9568a9095155`.
+
+**결정:** DAY3 종합의 DAY4 계획 중 난이도/길이는 사람 근거가 없고, 실기기·다른 브라우저는 이 회차에서 검증하기 어렵다. 원 PLAN의 「접근성·모바일 다듬기」와 스크린리더 계획을 좁혀, **일일 항로를 열면 격자 위에 서울 자정 안내가 바로 보이게** 했다. (열린 탭 자정 넘김은 이미 있지만, 안내 문구는 평소 화면에 없어 Chrome에서 바로 확인하기 어려웠다.)
+
+**구현 (805d36dd3af30709e840048d8a855a13c75f99d8, 버전 `245749cb6459`):**
+- `dayHint(seed, now)`: 오늘 「오늘의 항로는 서울 자정에 바뀌어요.」 / 어제 「어제의 항로예요. 오늘의 항로 버튼으로 오늘 시드를 열 수 있어요.」 / 지난 일일 「지난 일일 항로예요. …」 / 연습·무작위는 없음.
+- `#day-hint`는 문구가 바뀔 때만 DOM을 갱신(칸 클릭마다 다시 읽히지 않게). 자정 갱신 `render()`와 함께 안내도 바뀜. 기록 저장 규칙·SW·업데이트 배너는 유지.
+
+**테스트:** `npm test` 70/70, `check` 통과. 추가: 오늘/어제/지난/연습 문구, 자정 전후 같은 시드 문구 전환, `.day-hint[hidden]` CSS.
+
+**headless (사람 실기기 아님):** 9/9 PASS. 오늘·어제·복귀·지난 일일·연습(안내 숨김), 시계 조작으로 자정 후 판 유지+어제 안내.
+증거: [오늘](evidence/day4-run1/headless-today-hint.png) · [어제](evidence/day4-run1/headless-yesterday-hint.png) · [지난](evidence/day4-run1/headless-older-hint.png) · [연습](evidence/day4-run1/headless-practice-no-hint.png) · [자정 후](evidence/day4-run1/headless-hint-after-midnight.png).
+
+**미확인:** 실제 Chrome, 실기기, 스크린리더, 다른 브라우저.
+
+**다음:** 실제 Chrome QA. 그다음 더는 DAY4 run2(누적 17).
