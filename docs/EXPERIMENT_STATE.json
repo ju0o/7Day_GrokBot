@@ -105,7 +105,8 @@
     "implementation_commit": "c2724379b1382a10994dd705f0d0804fd149246b",
     "asset_version": "dd6524eaba7a",
     "tests": "npm test 59/59 pass",
-    "browser_qa": "Chrome online PASS except offline help hidden in details; headless offline functional PASS; footer fix pending recheck",
-    "fix_commit": "aa9755b267b1910fd4ccbfeba9ee6004bc4fadc6"
+    "browser_qa": "Chrome footer recheck PASS (dd6524eaba7a); headless offline functional PASS; real-device offline unverified",
+    "fix_commit": "aa9755b267b1910fd4ccbfeba9ee6004bc4fadc6",
+    "status": "completed"
   }
 }
