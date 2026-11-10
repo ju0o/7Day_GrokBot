@@ -355,3 +355,21 @@ run5·DAY2 완료. 다음: 2026-11-10 이후 DAY3 run1(누적 11).
 **미확인:** 실제 오프라인 새로고침 브라우저 QA 대기. SW가 없는 환경·구형 브라우저는 온라인만.
 
 **다음:** QA 결과 반영. run2는 다음 더.
+
+### DAY 3 · 회차 1 추가 기록 (같은 회차) — 온라인 Chrome QA + headless 오프라인 검증 (18:05~ KST)
+**실제 Chrome 온라인 QA (부모, `?qa=4a465bf1ec2e#seed=daily-2026-11-10`):** PASS — 시드 `daily-2026-11-10`·배지 「오늘의 항로」, SW ACTIVATED/RUNNING(scope `/7Day_GrokBot/public/`, `sw.js` fetch 핸들러 있음), 숨기기 후 4행1열 클릭 → 진행 1/7(◎ 칸 클릭은 상태 변화 없음). **FAIL(발견성):** 기본 화면에 오프라인 안내가 없고 푸터는 기존 문구뿐. 증거: [온라인](evidence/day3-run1/qa-online.png).
+
+**원인(소스·배포 확인):** 배포 누락·캐시 아님. 안내 문장은 배포된 `index.html`의 접힌 `<details>조작 방법</details>` 안에만 있어, 닫힌 상태에서는 화면에 안 보임(조건부 JS 표시 아님).
+
+**수정 (`aa9755b267b1910fd4ccbfeba9ee6004bc4fadc6`):** 푸터에 「한 번 연 뒤에는 네트워크가 없어도 같은 버전을 다시 열 수 있어요.」를 항상 보이게 추가. 회귀 테스트(푸터에 해당 문구 필수). 버전 `4a465bf1ec2e` → `dd6524eaba7a`. 조작 방법 안의 설명은 유지.
+
+**headless Chromium 오프라인 검증 (사람 실기기 아님, 버전 4a465bf1ec2e):**
+- SW activated·온라인 재로드 후 controller PASS
+- 오프라인 reload: 페이지 로드, 시드·배지, gridcell 25 PASS
+- 숨기기 → 상태 변경 PASS, 이웃 칸(3행 2열) 클릭 → 「실수 1회…」 PASS
+- 오프라인에서 `?qa=not-the-version` 탐색: 같은 앱·시드 로드 PASS
+- 온라인 복귀 후 시드 동일 PASS
+- 스크린샷: [오프라인 headless](evidence/day3-run1/qa-offline-headless.png)
+- 기본 화면 오프라인 안내: 접힌 details 때문에 **안 보임**(위 결함과 동일)
+
+**테스트:** 59/59 통과. 푸터 수정 후 실 Chrome/오프라인 재확인은 새 버전 `dd6524eaba7a`에서 대기.
