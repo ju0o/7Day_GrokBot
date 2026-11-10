@@ -4,7 +4,7 @@
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-export const FILES = ['index.html', 'app.js', 'engine.mjs', 'keys.mjs', 'store.mjs', 'a11y.mjs', 'style.css'];
+export const FILES = ['index.html', 'app.js', 'engine.mjs', 'keys.mjs', 'store.mjs', 'a11y.mjs', 'update.mjs', 'style.css'];
 export const TOKEN = /\?v=[\w-]*/g;
 export const normalize = (text) => text.replace(TOKEN, '?v=');
 export function computeVersion(contents /* {name: text} */) {
@@ -13,7 +13,7 @@ export function computeVersion(contents /* {name: text} */) {
   return h.digest('hex').slice(0, 12);
 }
 export function tokensIn(text) { return [...text.matchAll(/\?v=([\w-]*)/g)].map((m) => m[1]); }
-export const PRECACHE_ASSETS = ['index.html', 'app.js', 'engine.mjs', 'keys.mjs', 'store.mjs', 'a11y.mjs', 'style.css'];
+export const PRECACHE_ASSETS = FILES;
 /** Generated service worker body for a content version (cache name + precache URLs are versioned). */
 export function renderServiceWorker(version) {
   const v = String(version);
@@ -43,7 +43,7 @@ export function checkContents(contents) {
   const expected = computeVersion(contents);
   const found = [...tokensIn(contents['index.html'] ?? ''), ...tokensIn(contents['app.js'] ?? '')];
   const problems = [];
-  if (found.length < 6) problems.push(`expected >=6 version tokens, found ${found.length}`);
+  if (found.length < 7) problems.push(`expected >=7 version tokens, found ${found.length}`);
   for (const t of found) if (t !== expected) problems.push(`stale token ${t} (expected ${expected})`);
   if (contents['sw.js'] != null && !checkServiceWorker(contents['sw.js'], expected))
     problems.push('sw.js does not match renderServiceWorker(version)');

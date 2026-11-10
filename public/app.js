@@ -1,7 +1,8 @@
-import * as E from './engine.mjs?v=dd6524eaba7a';
-import { keyAction, focusAfterMove } from './keys.mjs?v=dd6524eaba7a';
-import { loadBest, saveBest } from './store.mjs?v=dd6524eaba7a';
-import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=dd6524eaba7a';
+import * as E from './engine.mjs?v=3e5f0cc74098';
+import { keyAction, focusAfterMove } from './keys.mjs?v=3e5f0cc74098';
+import { loadBest, saveBest } from './store.mjs?v=3e5f0cc74098';
+import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=3e5f0cc74098';
+import { shouldPromptUpdate, UPDATE_MESSAGE } from './update.mjs?v=3e5f0cc74098';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -126,6 +127,22 @@ function syncFromHash() { const r = E.resolveSeed(location.hash, state ? state.s
 window.addEventListener('hashchange', syncFromHash);
 syncFromHash();
 
+function showUpdateBanner() {
+  const box = $('update-banner'); const text = $('update-text');
+  if (!box) return;
+  if (text) text.textContent = UPDATE_MESSAGE;
+  box.hidden = false;
+}
+if ($('reload-update')) $('reload-update').onclick = () => location.reload();
 if (location.protocol !== 'file:' && 'serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => {});
+  navigator.serviceWorker.register('./sw.js', { scope: './' }).then((reg) => {
+    const maybePrompt = (workerReady) => { if (shouldPromptUpdate({ hasController: !!navigator.serviceWorker.controller, workerReady })) showUpdateBanner(); };
+    if (reg.waiting) maybePrompt(true);
+    reg.addEventListener('updatefound', () => {
+      const w = reg.installing;
+      if (!w) return;
+      w.addEventListener('statechange', () => { if (w.state === 'installed') maybePrompt(true); });
+    });
+    reg.update().catch(() => {});
+  }).catch(() => {});
 }

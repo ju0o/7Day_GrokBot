@@ -6,7 +6,7 @@ const real = await loadPublic();
 test('committed public files carry the source-derived version', () => {
   const r = checkContents(real);
   assert.deepEqual(r.problems, []);
-  assert.equal(r.found.length, 6);
+  assert.equal(r.found.length, 7);
 });
 test('any runtime content change without re-versioning is detected as stale', () => {
   for (const f of FILES) {
@@ -25,7 +25,7 @@ test('mixed tokens and missing tokens are flagged', () => {
   const mixed = { ...real, 'app.js': real['app.js'].replace(/\?v=[\w-]*/, '?v=deadbeef') };
   assert.equal(checkContents(mixed).ok, false);
   const none = { ...real, 'index.html': real['index.html'].replace(/\?v=[\w-]*/g, '') };
-  assert.match(checkContents(none).problems.join(), /found 4/);
+  assert.match(checkContents(none).problems.join(), /found 5/);
 });
 test('resource graph: every hashed runtime file exists; sw.js is generated not hashed', async () => {
   const files = new Set(await readdir(new URL('../public/', import.meta.url)));
