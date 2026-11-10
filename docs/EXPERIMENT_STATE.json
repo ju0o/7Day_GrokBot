@@ -118,10 +118,11 @@
   },
   "day3_run3": {
     "implementation_commit": "d718eba7168e35d144f70a19119177914d0ab225",
-    "asset_version": "981d534a7fcf",
+    "asset_version": "f5545088a2d6",
     "tests": "npm test 65/65 pass",
-    "browser_qa": "headless PASS (yesterday/today badges on 11-10); real Chrome pending (use daily-2026-11-11 after midnight)",
+    "browser_qa": "23:30 Chrome mostly PASS; yesterday label said 오늘 최고 -> display fix f5545088a2d6; yesterday screenshot ENOENT; recheck pending",
     "started_date": "2026-11-10",
-    "note": "DAY3 유지 even if calendar rolls"
+    "note": "DAY3 유지 even if calendar rolls",
+    "fix_commit": "81ca35ebfec44af076afa08f4afa788e8272ae4c"
   }
 }
