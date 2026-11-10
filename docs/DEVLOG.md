@@ -340,3 +340,18 @@ run4 완료. 다음: DAY2 run5(누적 10) — 안정화·DAY2 종합.
 **스크린샷:** [초고속 미기록 안내](evidence/day2-run5/postfix-too-fast-status.png)
 
 run5·DAY2 완료. 다음: 2026-11-10 이후 DAY3 run1(누적 11).
+
+## DAY 3 · 회차 1/5 (누적 11/35) — 2026-11-10 17:57 KST~
+**결정:** DAY2 계획의 「오프라인 지원은 검증 가능할 때만」을 1회차로 선택. 난이도/길이는 사람 플레이 근거가 아직 부족해 보류. 이미 PASS한 흐름은 재점검하지 않음. 최고 기록 규칙(`MIN_BEST_MS=100`)은 유지.
+
+**구현 (`c2724379b1382a10994dd705f0d0804fd149246b`):**
+- `scripts/asset-version.mjs`가 내용 버전으로 `public/sw.js`를 생성. 캐시 이름 `afterimage-<version>`, precache는 `./`, `index.html`, 버전 쿼리가 붙은 나머지 자산.
+- 새 버전 활성화 시 옛 `afterimage-*` 캐시 삭제. `app.js`가 `./sw.js`를 scope `./`로 등록(file: 제외).
+- 검사: sw.js가 생성물과 다르면 `npm run check` 실패. 테스트에 `MIN_BEST_MS===100` 고정.
+- 버전 `4dec932c9361` → `4a465bf1ec2e`.
+
+**테스트:** `npm test` 58/58 통과, `npm run check` 통과.
+
+**미확인:** 실제 오프라인 새로고침 브라우저 QA 대기. SW가 없는 환경·구형 브라우저는 온라인만.
+
+**다음:** QA 결과 반영. run2는 다음 더.
