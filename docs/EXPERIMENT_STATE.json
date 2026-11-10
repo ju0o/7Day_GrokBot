@@ -11,21 +11,21 @@
   "runs_by_date": {
     "2026-11-08": 5,
     "2026-11-09": 5,
-    "2026-11-10": 2
+    "2026-11-10": 3
   },
-  "cumulative_runs": 12,
+  "cumulative_runs": 13,
   "last_run": {
     "day": 3,
-    "run": 2,
+    "run": 3,
     "status": "completed",
-    "started": "2026-11-10 18:22 KST"
+    "started": "2026-11-10 23:24 KST"
   },
   "next_run": {
     "day": 3,
-    "run": 3,
+    "run": 4,
     "date": "2026-11-10",
-    "cumulative": 13,
-    "note": "같은 날 다음 더"
+    "cumulative": 14,
+    "note": "같은 실험일(DAY3)의 다음 더. 달력이 바뀌어도 DAY3 유지"
   },
   "notion_url": "https://app.notion.com/p/411000b759dc81959f77fccd727a45ae",
   "day1_run1": {
@@ -115,5 +115,13 @@
     "tests": "npm test 62/62 pass",
     "browser_qa": "Chrome PASS (banner, apply, no re-prompt, play 1/7, SW v11); headless update also PASS",
     "status": "completed"
+  },
+  "day3_run3": {
+    "implementation_commit": "d718eba7168e35d144f70a19119177914d0ab225",
+    "asset_version": "981d534a7fcf",
+    "tests": "npm test 65/65 pass",
+    "browser_qa": "pending",
+    "started_date": "2026-11-10",
+    "note": "DAY3 유지 even if calendar rolls"
   }
 }
