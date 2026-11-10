@@ -24,3 +24,14 @@ test('cache-busting version is consistent across html and module imports (avoids
   assert.equal(imports.length, 4);
   for (const m of imports) assert.equal(m[2], v, m[1]);
 });
+
+test('offline guidance is in the always-visible footer, not only inside collapsed details', async () => {
+  const html = await readFile(new URL('../public/index.html', import.meta.url), 'utf8');
+  const footer = html.match(/<footer>([\s\S]*?)<\/footer>/)[1];
+  assert.match(footer, /네트워크가 없어도/);
+  const details = html.match(/<details[\s\S]*?<\/details>/)[0];
+  const footerStart = html.indexOf('<footer>');
+  const firstOffline = html.indexOf('네트워크가 없어도');
+  assert.ok(firstOffline < footerStart || footer.includes('네트워크가 없어도'));
+  assert.match(footer, /네트워크가 없어도/);
+});
