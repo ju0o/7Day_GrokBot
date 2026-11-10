@@ -1,7 +1,7 @@
-import * as E from './engine.mjs?v=4dec932c9361';
-import { keyAction, focusAfterMove } from './keys.mjs?v=4dec932c9361';
-import { loadBest, saveBest } from './store.mjs?v=4dec932c9361';
-import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=4dec932c9361';
+import * as E from './engine.mjs?v=4a465bf1ec2e';
+import { keyAction, focusAfterMove } from './keys.mjs?v=4a465bf1ec2e';
+import { loadBest, saveBest } from './store.mjs?v=4a465bf1ec2e';
+import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=4a465bf1ec2e';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -125,3 +125,7 @@ document.addEventListener('keydown', (e) => {
 function syncFromHash() { const r = E.resolveSeed(location.hash, state ? state.seed : null); if (r.restart) start(r.seed); }
 window.addEventListener('hashchange', syncFromHash);
 syncFromHash();
+
+if (location.protocol !== 'file:' && 'serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => {});
+}
