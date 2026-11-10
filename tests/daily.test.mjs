@@ -59,7 +59,7 @@ test('MIN_BEST_MS unchanged', async () => {
   assert.equal(MIN_BEST_MS, 100);
 });
 
-import { nextSeoulMidnight, msUntilNextSeoulMidnight, dayChangeAction, bestTitle, formatBestLine } from '../public/engine.mjs';
+import { nextSeoulMidnight, msUntilNextSeoulMidnight, dayChangeAction, bestTitle, formatBestLine, dayHint } from '../public/engine.mjs';
 test('next Seoul midnight is the following 00:00 Asia/Seoul', () => {
   const justBefore = new Date('2026-11-10T23:59:59.000+09:00');
   const atMidnight = new Date('2026-11-11T00:00:00.000+09:00');
@@ -99,4 +99,23 @@ test('same open seed: badge and best title retarget after Seoul midnight', () =>
   assert.equal(previousDailySeed(before), 'daily-2026-11-09');
   assert.equal(previousDailySeed(after), 'daily-2026-11-10');
   assert.equal(dailySeed(after), 'daily-2026-11-11');
+});
+
+test('dayHint distinguishes today, yesterday, older daily, and practice', () => {
+  const now = new Date('2026-11-11T01:00:00+09:00');
+  assert.equal(dayHint('daily-2026-11-11', now), '오늘의 항로는 서울 자정에 바뀌어요.');
+  assert.equal(dayHint('daily-2026-11-10', now), '어제의 항로예요. 오늘의 항로 버튼으로 오늘 시드를 열 수 있어요.');
+  assert.equal(dayHint('daily-2026-11-09', now), '지난 일일 항로예요. 오늘의 항로 버튼으로 오늘 시드를 열 수 있어요.');
+  assert.equal(dayHint('day1-check', now), null);
+  assert.equal(dayHint('83mgep', now), null);
+  assert.doesNotMatch(dayHint('daily-2026-11-10', now), /서울 자정에 바뀌/);
+  const before = new Date('2026-11-10T23:59:59+09:00');
+  const after = new Date('2026-11-11T00:00:00+09:00');
+  assert.equal(dayHint('daily-2026-11-10', before), '오늘의 항로는 서울 자정에 바뀌어요.');
+  assert.equal(dayHint('daily-2026-11-10', after), '어제의 항로예요. 오늘의 항로 버튼으로 오늘 시드를 열 수 있어요.');
+});
+
+test('CSS hides .day-hint[hidden]', async () => {
+  const css = await readFile(new URL('../public/style.css', import.meta.url), 'utf8');
+  assert.match(css, /\.day-hint\[hidden\]\s*\{\s*display\s*:\s*none\s*;?\s*\}/);
 });

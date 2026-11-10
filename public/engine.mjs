@@ -157,6 +157,14 @@ export function dailyBadgeLabel(seed, now = new Date()) {
   return '일일 항로';
 }
 
+/** Visible hint for a daily seed: when today's route changes, or how to open today. Null for practice/random. */
+export function dayHint(seed, now = new Date()) {
+  if (!isDailySeed(seed)) return null;
+  if (seed === dailySeed(now)) return '오늘의 항로는 서울 자정에 바뀌어요.';
+  if (seed === previousDailySeed(now)) return '어제의 항로예요. 오늘의 항로 버튼으로 오늘 시드를 열 수 있어요.';
+  return '지난 일일 항로예요. 오늘의 항로 버튼으로 오늘 시드를 열 수 있어요.';
+}
+
 /** Compare scored results: fewer mistakes wins; then less time. Returns -1 if a better, 1 if b better, 0 tie. */
 export function compareResults(a, b) {
   if (!a || !b) return a ? -1 : b ? 1 : 0;

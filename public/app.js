@@ -1,8 +1,8 @@
-import * as E from './engine.mjs?v=9568a9095155';
-import { keyAction, focusAfterMove } from './keys.mjs?v=9568a9095155';
-import { loadBest, saveBest } from './store.mjs?v=9568a9095155';
-import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=9568a9095155';
-import { shouldPromptUpdate, UPDATE_MESSAGE } from './update.mjs?v=9568a9095155';
+import * as E from './engine.mjs?v=245749cb6459';
+import { keyAction, focusAfterMove } from './keys.mjs?v=245749cb6459';
+import { loadBest, saveBest } from './store.mjs?v=245749cb6459';
+import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=245749cb6459';
+import { shouldPromptUpdate, UPDATE_MESSAGE } from './update.mjs?v=245749cb6459';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -52,6 +52,15 @@ function render() {
     const line = E.isDailySeed(state.seed) ? E.formatBestLine(loadBest(state.seed), state.seed) : null;
     bestEl.hidden = !line;
     bestEl.textContent = line || '';
+  }
+  const hintEl = $('day-hint');
+  if (hintEl) {
+    const text = E.dayHint(state.seed) || '';
+    const hide = !text;
+    if (hintEl.textContent !== text || hintEl.hidden !== hide) {
+      hintEl.hidden = hide;
+      hintEl.textContent = text;
+    }
   }
   $('progress').textContent = `진행 ${v.path.length - 1}/${v.total - 1}칸`;
   $('mistakes').textContent = `실수 ${v.mistakes}${v.revealed ? ' · 연습' : ''}`;

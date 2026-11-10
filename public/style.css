@@ -24,6 +24,8 @@ code{color:var(--amber)}
 .cell .n{position:absolute;top:2px;left:6px;font-size:.65rem;color:var(--dim)}
 .board.shake{animation:shake .25s}
 @keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.day-hint{margin:0 0 10px;font-size:.85rem;color:var(--dim)}
+.day-hint[hidden]{display:none}
 .status{min-height:3em;margin:10px 0}
 .status.ok{color:var(--cyan)}.status.bad{color:var(--red)}
 .actions{display:flex;flex-wrap:wrap;gap:8px}
