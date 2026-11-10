@@ -20,7 +20,8 @@
     "run": 5,
     "status": "completed",
     "started": "2026-11-11 00:07 KST",
-    "note": "안정화·DAY3 종합. 시작 순서대로 DAY3. 실제 Chrome QA 대기."
+    "completed": "2026-11-11 00:14 KST",
+    "note": "안정화·DAY3 종합. 시작 순서대로 DAY3. Chrome QA PASS; 어제 최고 line still unverified in real Chrome (no stored records)."
   },
   "next_run": {
     "day": 4,
@@ -141,7 +142,7 @@
   "day3_run5": {
     "asset_version": "9568a9095155",
     "tests": "npm test 68/68 pass (no code change)",
-    "browser_qa": "headless stored-best/done-status/share/SW+banner midnight PASS; no new product defect; real Chrome pending",
+    "browser_qa": "Chrome 00:14 KST PASS (9568a9095155, DevTools closed, no banner): today daily-2026-11-11 오늘의 항로; yesterday #seed=daily-2026-11-10 어제의 항로; back today; footer offline sentence visible. No stored record for either seed — no best line; 어제 최고 in real Chrome still unverified (headless PASS). Evidence chrome/01-today.png, 02-yesterday.png, 03-back-today.png (desktop capture; page.screenshot ENOENT; step4 first shot pre-render and retaken).",
     "started_date": "2026-11-11",
     "status": "completed",
     "note": "Counted as DAY3 run5 by start order. Calendar date is 2026-11-11. Summary: docs/DAY3_SUMMARY.md"

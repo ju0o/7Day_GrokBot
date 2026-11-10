@@ -13,9 +13,9 @@
 | 5 | 00:07 (11-11) | 안정화(기록 있는 시드·완주 문구·SW/배너 자정 상호작용 headless) + DAY3 종합 | 이 문서 커밋 | 68/68 (코드 변경 없음) | `9568a9095155` |
 
 ## 성공 (실측, Chrome / headless 구분)
-- **실제 Chrome:** run1 푸터 오프라인 안내 재확인 PASS. run2 업데이트 배너→새 버전 열기·재안내 없음·플레이 유지 PASS. run3 어제/오늘 항로·배지·hash, 표시 수정 후 「어제 최고 실수 0 · 30.2초」 PASS. run4 열린 탭 자정 넘김(시드·hash·미리보기 유지, 배지 「오늘의 항로」→「어제의 항로」, 「오늘 최고」 없음, 버튼으로 11-11/11-10 전환) PASS.
+- **실제 Chrome:** run1 푸터 오프라인 안내 재확인 PASS. run2 업데이트 배너→새 버전 열기·재안내 없음·플레이 유지 PASS. run3 어제/오늘 항로·배지·hash, 표시 수정 후 「어제 최고 실수 0 · 30.2초」 PASS. run4 열린 탭 자정 넘김(시드·hash·미리보기 유지, 배지 「오늘의 항로」→「어제의 항로」, 「오늘 최고」 없음, 버튼으로 11-11/11-10 전환) PASS. **run5 (00:14경, `9568a9095155`, DevTools 닫힘, 업데이트 배너 없음) 5단계 PASS:** 오늘 `daily-2026-11-11`·「오늘의 항로」; 「어제 항로」→ `#seed=daily-2026-11-10`·「어제의 항로」; 오늘 복귀 `daily-2026-11-11`·「오늘의 항로」; 푸터 오프라인 문구 보임. 이 프로필에는 두 시드 모두 저장된 기록이 없어 기록줄은 나오지 않았고, 「어제 최고」 줄의 실제 Chrome 확인은 여전히 미확인(headless만 PASS).
 - **headless Chromium (사람 실기기 아님):** run1 오프라인 캐시 기능 PASS. run2 SW 갱신 PASS. run3 어제 항로 배지 PASS. run4 시계 조작으로 자정 넘김 15/15 PASS(기록 있는 시드의 「어제 최고」 줄 포함). run5: 기록 있는 미리보기 자정 넘김, 완주 상태/결과복사/헤더가 「오늘 최고」→「어제 최고」, 업데이트 배너가 떠 있고 SW(`afterimage-9568a9095155`)가 controlling인 채로 문구만 갱신·자동 새로고침 없음. 제품 결함은 추가로 발견되지 않음.
-- 증거 예: [run4 Chrome 자정 전](evidence/day3-run4/chrome-before-midnight.png) · [자정 후](evidence/day3-run4/chrome-after-midnight.png) · [run5 headless 기록줄](evidence/day3-run5/headless-stored-best-after.png) · [완주 문구 자정 후](evidence/day3-run5/headless-done-after.png).
+- 증거 예: [run4 Chrome 자정 전](evidence/day3-run4/chrome-before-midnight.png) · [자정 후](evidence/day3-run4/chrome-after-midnight.png) · [run5 Chrome 오늘](evidence/day3-run5/chrome/01-today.png) · [어제](evidence/day3-run5/chrome/02-yesterday.png) · [오늘 복귀](evidence/day3-run5/chrome/03-back-today.png) · [run5 headless 기록줄](evidence/day3-run5/headless-stored-best-after.png) · [완주 문구 자정 후](evidence/day3-run5/headless-done-after.png). run5 Chrome 화면은 `page.screenshot` ENOENT 때문에 데스크톱 캡처로 저장했고, 4단계(푸터) 첫 캡처는 렌더 전이라 다시 찍었다.
 
 ## 실패와 해결
 1. **run1 오프라인 안내 발견성:** 오프라인 설명이 접힌 `<details>` 안에만 있어 찾기 어려웠다 → 푸터에 항상 보이는 문구로 옮김(`aa9755b`).
@@ -27,7 +27,7 @@
 ## 미확인
 - 스크린리더, 실제 모바일·터치 기기, Chrome 외 브라우저.
 - 로컬 127.0.0.1 브라우저 연결 거부(셸 curl은 200, 원인 미확인) — DAY1부터 미해결.
-- **기록 있는 시드의 「어제 최고」 줄이 실제 Chrome에서 자정을 넘는 경로** — run4 Chrome 프로필에 해당 시드 기록이 없어 미확인. run5 headless(시계 조작)에서는 PASS.
+- **기록 있는 시드의 「어제 최고」 줄이 실제 Chrome에 표시되거나, 자정을 넘는 경로** — run4·run5 Chrome 프로필 모두 해당 시드 기록이 없어 미확인. run5 headless(시계 조작)에서는 PASS.
 - 실기기 오프라인, 일부 Pages 캐시 지연.
 
 ## DAY 4 계획 (미실행, 다음 '더'부터 · 누적 16)

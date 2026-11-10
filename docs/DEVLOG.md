@@ -489,6 +489,10 @@ run4 완료. 누적 14/35. 다음: DAY3 run5(누적 15) — 안정화·DAY3 종�
 
 **종합:** [DAY3_SUMMARY.md](DAY3_SUMMARY.md). run4·run5는 11-11 KST에 걸쳐 진행됐고, 시작 순서대로 DAY3로 셌다.
 
-**미확인:** 실제 Chrome(이 회차 안정화 경로, 특히 기록 있는 시드의 자정 넘김 「어제 최고」 줄), 실기기, 스크린리더, 다른 브라우저.
+### DAY 3 · 회차 5 실제 Chrome QA (같은 회차, `?qa=9568a9095155`, DevTools 닫힘)
+**PASS (5단계):** 업데이트 배너는 나타나지 않음(이미 이 버전). 오늘 `daily-2026-11-11`·「오늘의 항로」. 「어제 항로」→ `#seed=daily-2026-11-10`·「어제의 항로」. 오늘 복귀 `daily-2026-11-11`·「오늘의 항로」. 푸터 오프라인 문구 보임.
+증거: [오늘](evidence/day3-run5/chrome/01-today.png) · [어제](evidence/day3-run5/chrome/02-yesterday.png) · [오늘 복귀](evidence/day3-run5/chrome/03-back-today.png). `page.screenshot`이 ENOENT로 실패해 데스크톱 캡처로 저장. 4단계(푸터) 첫 캡처는 렌더 전이라 다시 찍었다.
 
-**다음:** 실제 Chrome QA. 그다음 '더'는 DAY4 run1(누적 16).
+**정직 기록:** 이 Chrome 프로필에는 두 시드 모두 저장된 기록이 없어 기록줄이 나오지 않았다. 「어제 최고」 줄의 실제 Chrome 확인은 여전히 미확인(headless PASS만). 실기기·스크린리더·다른 브라우저는 미확인.
+
+run5·DAY3 완료. 누적 15/35. 다음: DAY4 run1(누적 16).
