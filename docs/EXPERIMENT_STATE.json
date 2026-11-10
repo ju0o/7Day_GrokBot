@@ -120,7 +120,7 @@
     "implementation_commit": "d718eba7168e35d144f70a19119177914d0ab225",
     "asset_version": "981d534a7fcf",
     "tests": "npm test 65/65 pass",
-    "browser_qa": "pending",
+    "browser_qa": "headless PASS (yesterday/today badges on 11-10); real Chrome pending (use daily-2026-11-11 after midnight)",
     "started_date": "2026-11-10",
     "note": "DAY3 유지 even if calendar rolls"
   }

@@ -424,3 +424,8 @@ run2 완료. 다음: DAY3 run3(누적 13).
 **테스트:** 65/65 통과, check 통과.
 
 **미확인:** 실제 Chrome QA. 자정 이후 QA는 `#seed=daily-2026-11-11`.
+
+### DAY 3 · 회차 3 headless 확인 (같은 회차, 23:28 KST, 사람 실기기 아님, 아직 11-10)
+`?qa=981d534a7fcf#seed=daily-2026-11-10` — 배지 「오늘의 항로」. 「어제 항로」→ 시드 `daily-2026-11-09`·「어제의 항로」. 「오늘의 항로」→ `daily-2026-11-10`·「오늘의 항로」. PASS.
+증거: [headless](evidence/day3-run3/qa-yesterday-headless.png)
+실제 Chrome은 자정 이후 \`daily-2026-11-11\` 기준으로 확인하면 됨.
