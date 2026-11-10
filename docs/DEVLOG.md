@@ -403,3 +403,12 @@ run1 완료. 다음: DAY3 run2(누적 12).
 **스크린샷:** [SW 갱신](evidence/day3-run2/qa-sw-update-headless.png)
 
 실제 Chrome 확인은 부모 QA 대기.
+
+### DAY 3 · 회차 2 실제 Chrome 확인 (같은 회차, 18:27 KST경, `?qa=3e5f0cc74098`, 이전 버전 방문 프로필)
+**PASS:**
+1. 배너 「새 버전이 있어요. 새로고침하면 적용돼요.」+「새 버전 열기」 표시. 증거: [배너](evidence/day3-run2/qa-chrome-banner.png)
+2. 클릭 후 시드 `daily-2026-11-10`·배지 「오늘의 항로」·배너 사라짐·푸터 오프라인 안내 표시. 증거: [적용 후](evidence/day3-run2/qa-chrome-after-update.png)
+3. 다시 새로고침해도 배너가 다시 나오지 않음. 숨기기 후 4행1열 클릭 → 「좋아요, 계속 이어 가세요.」 진행 1/7, 실수 0.
+4. SW ACTIVATED/RUNNING, version ID 11.
+
+run2 완료. 다음: DAY3 run3(누적 13).

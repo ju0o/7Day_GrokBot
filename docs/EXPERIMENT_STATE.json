@@ -113,6 +113,7 @@
     "implementation_commit": "5fe6c9ccf972cbe93af97a741a3bd9f0ae7bfe4e",
     "asset_version": "3e5f0cc74098",
     "tests": "npm test 62/62 pass",
-    "browser_qa": "headless SW update PASS (banner + old cache replaced); real Chrome pending"
+    "browser_qa": "Chrome PASS (banner, apply, no re-prompt, play 1/7, SW v11); headless update also PASS",
+    "status": "completed"
   }
 }
