@@ -17,16 +17,16 @@
   "last_run": {
     "day": 3,
     "run": 4,
-    "status": "in_progress",
+    "status": "completed",
     "started": "2026-11-10 23:44 KST",
+    "completed": "2026-11-11 00:01 KST",
     "note": "시작일 기준 DAY3, 자정 넘겨도 DAY3 유지"
   },
   "next_run": {
     "day": 3,
-    "run": 4,
-    "cumulative": 14,
-    "status": "in_progress",
-    "note": "DAY3 run4 진행중(23:44 KST 시작). 실제 Chrome QA 대기. 시작일 기준 DAY3 유지."
+    "run": 5,
+    "cumulative": 15,
+    "note": "DAY3 run5 — 안정화·DAY3 종합. 시작일 기준 DAY3 유지."
   },
   "notion_url": "https://app.notion.com/p/411000b759dc81959f77fccd727a45ae",
   "day1_run1": {
@@ -131,9 +131,10 @@
     "implementation_commit": "7d3b258049fab8ec2c1276d1fbedcbeb8a762879",
     "asset_version": "9568a9095155",
     "tests": "npm test 68/68 pass",
-    "browser_qa": "headless Chromium clock 15/15 PASS; real Chrome pending",
+    "browser_qa": "Chrome midnight-rollover PASS (9568a9095155): 23:53:41 banner, daily-2026-11-10 오늘의 항로 no best line, preview kept; 00:00:48 same seed/hash/preview, badge 어제의 항로, no 오늘 최고; 00:01:17 오늘의 항로 → daily-2026-11-11; 00:01:30 어제 항로 → daily-2026-11-10 어제의 항로. 어제 최고 line unverified in real Chrome (no stored best for that seed). Evidence chrome-before/after-midnight and chrome-after-midnight-buttons.png. Headless 15/15 earlier.",
     "started_date": "2026-11-10",
-    "status": "in_progress",
-    "note": "DAY3 유지 even if calendar rolls"
+    "status": "completed",
+    "note": "DAY3 유지 even if calendar rolls",
+    "docs_commit_in_progress": "0c40ebaae17c482de01f707d84e0f1a389071199"
   }
 }

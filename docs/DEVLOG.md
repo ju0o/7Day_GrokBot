@@ -467,6 +467,10 @@ run3 완료. 누적 13/35. 다음: DAY3 run4(누적 14).
 **headless Chromium (시계 조작, 사람 실기기 아님):** 로컬 `127.0.0.1:4278`, 15/15 PASS. 23:59:50 KST에 `daily-2026-11-10`을 연 뒤 00:00:10으로 진행 — 시드·hash·미리보기 유지, 배지 「어제의 항로」, 「어제 최고 실수 0 · 30.2초」. 「오늘의 항로」 클릭 → `daily-2026-11-11`. `daily-2026-11-09`는 자정 후 「일일 항로」·「2026-11-09 최고 …」, 「어제 항로」 클릭 → `daily-2026-11-10`.
 증거: [자정 전](evidence/day3-run4/headless-before-midnight.png) · [자정 후](evidence/day3-run4/headless-after-midnight.png) · [옛 시드 자정 후](evidence/day3-run4/headless-older-after-midnight.png).
 
-**미확인:** 실제 Chrome(열린 탭 자정 넘김 포함), 실기기, 스크린리더, 다른 브라우저.
+### DAY 3 · 회차 4 실제 Chrome 자정 넘김 QA (같은 회차, `?qa=9568a9095155`)
+**PASS:** 23:53:41 업데이트 배너→새 버전 열기, `daily-2026-11-10`·「오늘의 항로」·기록줄 없음, 미리보기 유지. 00:00:48 새로고침 없이 시드·hash·미리보기 그대로, 배지 자동으로 「어제의 항로」, 「오늘 최고」 없음. 00:01:17 「오늘의 항로」 → `daily-2026-11-11`·「오늘의 항로」. 00:01:30 「어제 항로」 → `daily-2026-11-10`·「어제의 항로」.
+증거: [자정 전](evidence/day3-run4/chrome-before-midnight.png) · [자정 후](evidence/day3-run4/chrome-after-midnight.png) · [버튼](evidence/day3-run4/chrome-after-midnight-buttons.png). 참고: 자정 후 두 PNG는 바이트가 동일하다. 버튼 클릭(00:01:17·00:01:30)의 별도 화면은 이 파일만으로는 구분되지 않는다.
 
-**다음:** 실제 Chrome QA.
+**참고:** 해당 시드에 기록이 없어, 「어제 최고」 줄의 실제 Chrome 자정 넘김은 미확인. (headless 시계 조작에서는 「어제 최고 실수 0 · 30.2초」를 확인함.) 실기기·스크린리더·다른 브라우저는 여전히 미확인.
+
+run4 완료. 누적 14/35. 다음: DAY3 run5(누적 15) — 안정화·DAY3 종합.
