@@ -394,3 +394,12 @@ run1 완료. 다음: DAY3 run2(누적 12).
 - `register` 후 `reg.update()`로 새 SW 확인. 버전 `dd6524eaba7a` → `3e5f0cc74098`.
 
 **테스트:** 62/62 통과, check 통과. (headless: 옛 캐시 프로필로 갱신 여부는 배포 후 확인)
+
+### DAY 3 · 회차 2 headless 갱신 검증 (같은 회차, 사람 실기기 아님)
+프로필에 옛 캐시 \`afterimage-dd6524eaba7a\`를 심은 뒤 공개 \`?qa=3e5f0cc74098#seed=daily-2026-11-10\`을 열었음.
+
+**PASS:** 배너 「새 버전이 있어요. 새로고침하면 적용돼요.」 표시 → **새 버전 열기** 클릭 후 캐시가 \`afterimage-3e5f0cc74098\`만 남고 옛 캐시 삭제, SW activated, 시드 유지, 푸터 오프라인 문구 유지.
+
+**스크린샷:** [SW 갱신](evidence/day3-run2/qa-sw-update-headless.png)
+
+실제 Chrome 확인은 부모 QA 대기.
