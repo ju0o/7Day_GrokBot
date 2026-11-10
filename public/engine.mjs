@@ -141,11 +141,19 @@ export function compareResults(a, b) {
   return 0;
 }
 /** Korean share/summary line for a finished scored or practice run. */
-export function formatResultLine({ seed, steps, mistakes, ms, scored, best }) {
+/** Label for a stored daily best: 오늘 최고 / 어제 최고 / YYYY-MM-DD 최고. Display only. */
+export function bestTitle(seed, now = new Date()) {
+  const kind = dailyBadgeLabel(seed, now);
+  if (kind === '오늘의 항로') return '오늘 최고';
+  if (kind === '어제의 항로') return '어제 최고';
+  if (isDailySeed(seed)) return `${String(seed).slice('daily-'.length)} 최고`;
+  return '최고';
+}
+export function formatResultLine({ seed, steps, mistakes, ms, scored, best }, now = new Date()) {
   const sec = (Math.max(0, ms) / 1000).toFixed(1);
   const mode = scored ? '기록' : '연습';
   let line = `잔상 항로 · ${seed} · ${steps}칸 · ${sec}초 · 실수 ${mistakes}회 · ${mode}`;
-  if (scored && best) line += ' · 오늘 최고';
+  if (scored && best) line += ' · ' + bestTitle(seed, now);
   return line;
 }
 /**
@@ -174,19 +182,20 @@ export function bestUpdate(seed, previous, current) {
  * Extra suffix for the arrival status line (after time/mistakes).
  * Practice, today-best, or too-fast rejection for daily scored runs.
  */
-export function completionStatusExtra(seed, result, bestUpdateResult) {
+export function completionStatusExtra(seed, result, bestUpdateResult, now = new Date()) {
   if (!result) return '';
   if (!result.scored) return ' (다시 보기 사용 · 연습 기록)';
-  if (bestUpdateResult?.isNewBest) return ' · 오늘 최고';
+  const title = bestTitle(seed, now);
+  if (bestUpdateResult?.isNewBest) return ' · ' + title;
   if (bestUpdateResult?.rejected === 'too-fast' && isDailySeed(seed))
-    return ' · 0.1초 미만이라 오늘 최고에 넣지 않았어요';
+    return ` · 0.1초 미만이라 ${title}에 넣지 않았어요`;
   return '';
 }
 
 /** Meta line for a stored daily best, or null if none / implausible. */
-export function formatBestLine(best) {
+export function formatBestLine(best, seed, now = new Date()) {
   if (!isPlausibleStoredBest(best)) return null;
-  return `오늘 최고 실수 ${best.mistakes} · ${(Math.max(0, best.ms) / 1000).toFixed(1)}초`;
+  return `${bestTitle(seed, now)} 실수 ${best.mistakes} · ${(Math.max(0, best.ms) / 1000).toFixed(1)}초`;
 }
 
 /** Shareable hash fragment for a seed, or null if invalid. */

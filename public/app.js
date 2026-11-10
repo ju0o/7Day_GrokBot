@@ -1,8 +1,8 @@
-import * as E from './engine.mjs?v=981d534a7fcf';
-import { keyAction, focusAfterMove } from './keys.mjs?v=981d534a7fcf';
-import { loadBest, saveBest } from './store.mjs?v=981d534a7fcf';
-import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=981d534a7fcf';
-import { shouldPromptUpdate, UPDATE_MESSAGE } from './update.mjs?v=981d534a7fcf';
+import * as E from './engine.mjs?v=f5545088a2d6';
+import { keyAction, focusAfterMove } from './keys.mjs?v=f5545088a2d6';
+import { loadBest, saveBest } from './store.mjs?v=f5545088a2d6';
+import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=f5545088a2d6';
+import { shouldPromptUpdate, UPDATE_MESSAGE } from './update.mjs?v=f5545088a2d6';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -49,7 +49,7 @@ function render() {
   if (badge) { badge.hidden = !badgeLabel; badge.textContent = badgeLabel || ''; }
   const bestEl = $('daily-best');
   if (bestEl) {
-    const line = daily ? E.formatBestLine(loadBest(state.seed)) : null;
+    const line = daily ? E.formatBestLine(loadBest(state.seed), state.seed) : null;
     bestEl.hidden = !line;
     bestEl.textContent = line || '';
   }
@@ -65,7 +65,7 @@ function render() {
       if (u.store) saveBest(state.seed, u.best);
       const bestEl = $('daily-best');
       if (bestEl) {
-        const line = E.formatBestLine(loadBest(state.seed));
+        const line = E.formatBestLine(loadBest(state.seed), state.seed);
         bestEl.hidden = !line;
         bestEl.textContent = line || '';
       }

@@ -21,8 +21,11 @@ test('bestUpdate only for scored daily seeds', () => {
   assert.equal(tie.store, false); assert.equal(tie.isNewBest, true);
 });
 test('formatResultLine distinguishes practice and today-best', () => {
-  assert.equal(E.formatResultLine({ seed: 'daily-2026-11-09', steps: 7, mistakes: 0, ms: 2100, scored: true, best: true }),
-    '잔상 항로 · daily-2026-11-09 · 7칸 · 2.1초 · 실수 0회 · 기록 · 오늘 최고');
+  const nov10 = new Date('2026-11-10T15:00:00+09:00');
+  assert.equal(E.formatResultLine({ seed: 'daily-2026-11-10', steps: 7, mistakes: 0, ms: 2100, scored: true, best: true }, nov10),
+    '잔상 항로 · daily-2026-11-10 · 7칸 · 2.1초 · 실수 0회 · 기록 · 오늘 최고');
+  assert.equal(E.formatResultLine({ seed: 'daily-2026-11-09', steps: 7, mistakes: 0, ms: 2100, scored: true, best: true }, nov10),
+    '잔상 항로 · daily-2026-11-09 · 7칸 · 2.1초 · 실수 0회 · 기록 · 어제 최고');
   assert.match(E.formatResultLine({ seed: 'x', steps: 7, mistakes: 1, ms: 500, scored: false, best: false }), /연습/);
 });
 test('store load/save with memory storage', () => {
@@ -35,8 +38,12 @@ test('store load/save with memory storage', () => {
 });
 test('formatBestLine and seedShareUrl', () => {
   assert.equal(E.formatBestLine(null), null);
-  assert.equal(E.formatBestLine({ mistakes: 0, ms: 5900, steps: 7 }), '오늘 최고 실수 0 · 5.9초');
-  assert.equal(E.formatBestLine({ mistakes: 1, ms: 100, steps: 7 }), '오늘 최고 실수 1 · 0.1초');
+  const nov10 = new Date('2026-11-10T15:00:00+09:00');
+  assert.equal(E.formatBestLine({ mistakes: 0, ms: 5900, steps: 7 }, 'daily-2026-11-10', nov10), '오늘 최고 실수 0 · 5.9초');
+  assert.equal(E.formatBestLine({ mistakes: 1, ms: 100, steps: 7 }, 'daily-2026-11-10', nov10), '오늘 최고 실수 1 · 0.1초');
+  assert.equal(E.formatBestLine({ mistakes: 0, ms: 30200, steps: 7 }, 'daily-2026-11-09', nov10), '어제 최고 실수 0 · 30.2초');
+  assert.equal(E.formatBestLine({ mistakes: 0, ms: 30200, steps: 7 }, 'daily-2026-11-08', nov10), '2026-11-08 최고 실수 0 · 30.2초');
+  assert.doesNotMatch(E.formatBestLine({ mistakes: 0, ms: 30200, steps: 7 }, 'daily-2026-11-09', nov10), /오늘 최고/);
   assert.equal(E.seedHash('daily-2026-11-09'), '#seed=daily-2026-11-09');
   assert.equal(E.seedHash('bad seed'), null);
   assert.equal(E.seedShareUrl('day1-check', 'https://ju0o.github.io/7Day_GrokBot/public'), 'https://ju0o.github.io/7Day_GrokBot/public/#seed=day1-check');
@@ -62,7 +69,7 @@ test('implausible fast scored time does not overwrite a real best', () => {
   assert.equal(u.rejected, 'too-fast');
   assert.deepEqual(u.best, prev);
   assert.equal(E.formatBestLine({ mistakes: 0, ms: 0, steps: 7 }), null);
-  assert.equal(E.formatBestLine(prev), '오늘 최고 실수 0 · 5.9초');
+  assert.equal(E.formatBestLine(prev, 'daily-2026-11-10', new Date('2026-11-10T12:00:00+09:00')), '오늘 최고 실수 0 · 5.9초');
   // old behavior: compareResults alone would prefer 0ms — must not store via bestUpdate
   assert.equal(E.compareResults(fast, prev), -1);
 });
@@ -80,8 +87,11 @@ test('completionStatusExtra explains too-fast daily runs', () => {
   const scored = { steps: 7, mistakes: 0, ms: 0, scored: true };
   const u = E.bestUpdate('daily-2026-11-09', { mistakes: 0, ms: 30200, steps: 7 }, scored);
   assert.equal(u.rejected, 'too-fast');
-  assert.equal(E.completionStatusExtra('daily-2026-11-09', scored, u), ' · 0.1초 미만이라 오늘 최고에 넣지 않았어요');
-  assert.equal(E.completionStatusExtra('daily-2026-11-09', { ...scored, ms: 30200, scored: true }, { isNewBest: true }), ' · 오늘 최고');
+  const nov10 = new Date('2026-11-10T15:00:00+09:00');
+  assert.equal(E.completionStatusExtra('daily-2026-11-10', scored, u, nov10), ' · 0.1초 미만이라 오늘 최고에 넣지 않았어요');
+  assert.equal(E.completionStatusExtra('daily-2026-11-09', scored, u, nov10), ' · 0.1초 미만이라 어제 최고에 넣지 않았어요');
+  assert.equal(E.completionStatusExtra('daily-2026-11-09', { ...scored, ms: 30200, scored: true }, { isNewBest: true }, nov10), ' · 어제 최고');
+  assert.equal(E.completionStatusExtra('daily-2026-11-10', { ...scored, ms: 30200, scored: true }, { isNewBest: true }, nov10), ' · 오늘 최고');
   assert.equal(E.completionStatusExtra('x', { ...scored, scored: false }, null), ' (다시 보기 사용 · 연습 기록)');
   assert.equal(E.completionStatusExtra('day1-check', scored, { rejected: 'too-fast' }), '');
 });
