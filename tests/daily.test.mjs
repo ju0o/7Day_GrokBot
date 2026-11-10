@@ -35,3 +35,26 @@ test('daily badge visibility follows isDailySeed only', () => {
   assert.equal(isDailySeed('day1-check'), false);
   assert.equal(isDailySeed('83mgep'), false);
 });
+import { previousDailySeed, dailyBadgeLabel, shiftYmd } from '../public/engine.mjs';
+test('previousDailySeed is the Seoul calendar day before now', () => {
+  assert.equal(shiftYmd('2026-11-10', -1), '2026-11-09');
+  assert.equal(shiftYmd('2026-01-01', -1), '2025-12-31');
+  assert.equal(shiftYmd('2026-03-01', -1), '2026-02-28');
+  assert.equal(previousDailySeed(new Date('2026-11-10T23:59:59+09:00')), 'daily-2026-11-09');
+  assert.equal(previousDailySeed(new Date('2026-11-11T00:00:00+09:00')), 'daily-2026-11-10');
+  assert.equal(previousDailySeed(new Date('2026-11-10T14:59:59.000Z')), 'daily-2026-11-09'); // 23:59 KST
+  assert.equal(previousDailySeed(new Date('2026-11-10T15:00:00.000Z')), 'daily-2026-11-10'); // 00:00 KST 11th
+  assert.equal(parseSeedHash('#seed=daily-2026-11-10'), 'daily-2026-11-10');
+});
+test('dailyBadgeLabel distinguishes today, yesterday, and older daily seeds', () => {
+  const now = new Date('2026-11-11T00:10:00+09:00');
+  assert.equal(dailyBadgeLabel('daily-2026-11-11', now), '오늘의 항로');
+  assert.equal(dailyBadgeLabel('daily-2026-11-10', now), '어제의 항로');
+  assert.equal(dailyBadgeLabel('daily-2026-11-09', now), '일일 항로');
+  assert.equal(dailyBadgeLabel('day1-check', now), null);
+  assert.equal(dailyBadgeLabel('83mgep', now), null);
+});
+test('MIN_BEST_MS unchanged', async () => {
+  const { MIN_BEST_MS } = await import('../public/engine.mjs');
+  assert.equal(MIN_BEST_MS, 100);
+});

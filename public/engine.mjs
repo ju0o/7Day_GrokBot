@@ -116,6 +116,22 @@ export function seoulYmd(now = new Date()) {
 /** Deterministic daily share seed: daily-YYYY-MM-DD (Seoul calendar). Matches parseSeedHash charset. */
 export function dailySeed(now = new Date()) { return 'daily-' + seoulYmd(now); }
 export function isDailySeed(seed) { return /^daily-\d{4}-\d{2}-\d{2}$/.test(String(seed ?? '')); }
+/** Shift a Seoul calendar YYYY-MM-DD by whole days (civil-date arithmetic). */
+export function shiftYmd(ymd, days) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(ymd ?? ''));
+  if (!m) return null;
+  const dt = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
+  dt.setUTCDate(dt.getUTCDate() + Number(days));
+  return dt.toISOString().slice(0, 10);
+}
+export function previousDailySeed(now = new Date()) { return 'daily-' + shiftYmd(seoulYmd(now), -1); }
+/** '오늘의 항로' | '어제의 항로' | null (not a daily seed). Older daily dates stay labeled 일일 항로. */
+export function dailyBadgeLabel(seed, now = new Date()) {
+  if (!isDailySeed(seed)) return null;
+  if (seed === dailySeed(now)) return '오늘의 항로';
+  if (seed === previousDailySeed(now)) return '어제의 항로';
+  return '일일 항로';
+}
 
 /** Compare scored results: fewer mistakes wins; then less time. Returns -1 if a better, 1 if b better, 0 tie. */
 export function compareResults(a, b) {

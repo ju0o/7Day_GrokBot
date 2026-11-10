@@ -1,8 +1,8 @@
-import * as E from './engine.mjs?v=3e5f0cc74098';
-import { keyAction, focusAfterMove } from './keys.mjs?v=3e5f0cc74098';
-import { loadBest, saveBest } from './store.mjs?v=3e5f0cc74098';
-import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=3e5f0cc74098';
-import { shouldPromptUpdate, UPDATE_MESSAGE } from './update.mjs?v=3e5f0cc74098';
+import * as E from './engine.mjs?v=981d534a7fcf';
+import { keyAction, focusAfterMove } from './keys.mjs?v=981d534a7fcf';
+import { loadBest, saveBest } from './store.mjs?v=981d534a7fcf';
+import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=981d534a7fcf';
+import { shouldPromptUpdate, UPDATE_MESSAGE } from './update.mjs?v=981d534a7fcf';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -44,9 +44,9 @@ function render() {
     b.disabled = v.phase !== 'recall';
   });
   $('seed').textContent = state.seed;
-  const daily = E.isDailySeed(state.seed);
+  const badgeLabel = E.dailyBadgeLabel(state.seed);
   const badge = $('daily-badge');
-  if (badge) badge.hidden = !daily;
+  if (badge) { badge.hidden = !badgeLabel; badge.textContent = badgeLabel || ''; }
   const bestEl = $('daily-best');
   if (bestEl) {
     const line = daily ? E.formatBestLine(loadBest(state.seed)) : null;
@@ -95,6 +95,7 @@ $('reveal').onclick = () => act(E.reveal(state));
 $('replay').onclick = () => start(state.seed);
 $('fresh').onclick = () => start(E.randomSeed());
 $('daily').onclick = () => start(E.dailySeed());
+$('yesterday').onclick = () => start(E.previousDailySeed());
 $('copy-seed').onclick = async () => {
   const base = location.origin + location.pathname.replace(/\/[^/]*$/, '/');
   const out = E.seedShareUrl(state.seed, base) || '';
