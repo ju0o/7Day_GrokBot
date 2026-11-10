@@ -16,7 +16,7 @@ ONE WORD LAB 7일 자율 개발 실험(2026-11-08 ~ 11-14, Asia/Seoul)에서 Gro
 상태 문구는 `aria-live`로 읽히고, 격자 칸마다 행·열·출발/도착 라벨이 있어요. 키보드: 방향키 이동 · Backspace 되돌리기 · R 새 항로. Enter/Space는 포커스된 버튼을 누르고, 포커스가 없을 때 Enter는 미리보기에서 숨기기·완료 후 같은 항로 다시. 시드는 `#seed=abc123` 주소로 공유됩니다(영문·숫자·`_`·`-` 1~32자만, 그 외 주소는 새 항로로 시작). **오늘의 항로**는 Asia/Seoul 달력의 `daily-YYYY-MM-DD` 시드예요(같은 날이면 같은 항로). **어제 항로**로 바로 전날 시드를 열 수 있어요. 기록 판(다시 보기 없음)을 끝내면 이 브라우저에만 그날의 최고가 남고, **결과 복사**로 한 줄 요약을, **시드 주소 복사**로 `#seed=` 링크를 복사할 수 있어요. 헤더에는 「오늘 최고」/「어제 최고」(또는 날짜 최고)가 보일 수 있어요(0.1초 미만 기록은 무시·삭제).
 
 ### 공개 미리보기 (알파)
-https://ju0o.github.io/7Day_GrokBot/ — GitHub Pages(main 브랜치 루트). 최종 릴리스가 아닌 검증용 알파입니다. DAY1에 실제 Chrome에서 마우스 완주·실수·다시 보기·키보드(←, Backspace, R)·360px 에뮬레이션을 확인했습니다([증거](docs/evidence/day1-run2/)). DAY1 run3에 Enter 규칙·완주 후 포커스·틀린 칸 문구, run4에 내용 기반 버전 배포 후 완주·루트 주소 이동, run5에 연습 판·공유 주소 시드 처리(잘못된 값 → 새 시드)도 Chrome에서 재확인했습니다. 미확인: 실제 모바일/터치 기기, 다른 브라우저, 스크린리더, 일부 Enter 동작, 로컬 127.0.0.1 접속 문제. 예: https://ju0o.github.io/7Day_GrokBot/#seed=day1-check
+https://ju0o.github.io/7Day_GrokBot/ — GitHub Pages(main 브랜치 루트). 최종 릴리스가 아닌 검증용 알파입니다. DAY1에 실제 Chrome에서 마우스 완주·실수·다시 보기·키보드(←, Backspace, R)·360px 에뮬레이션을 확인했습니다([증거](docs/evidence/day1-run2/)). DAY1 run3에 Enter 규칙·완주 후 포커스·틀린 칸 문구, run4에 내용 기반 버전 배포 후 완주·루트 주소 이동, run5에 연습 판·공유 주소 시드 처리(잘못된 값 → 새 시드)도 Chrome에서 재확인했습니다. DAY2에 일일 항로·로컬 최고·결과/시드 복사·접근성 핵심을, DAY3에 오프라인 캐시·SW 업데이트 안내·어제 항로·열린 탭 자정 넘김을 Chrome 또는 headless로 확인했습니다(종합: docs/DAY3_SUMMARY.md). 미확인: 실제 모바일/터치 기기, 다른 브라우저, 스크린리더, 로컬 127.0.0.1 접속 문제, 기록 있는 시드의 실제 Chrome 자정 넘김 「어제 최고」 줄. 예: https://ju0o.github.io/7Day_GrokBot/#seed=day1-check
 
 ## 실행
 Node.js 20 이상, 의존성 없음.
@@ -39,11 +39,12 @@ npm run check  # 구문 검사
 - `docs/` — PRD, 계획, 개발일지, 실험 상태
 
 ## 문의·기록
-문제는 GitHub Issues로 남겨 주세요. 개발 과정: `docs/DEVLOG.md`, 하루 종합: `docs/DAY1_SUMMARY.md`, `docs/DAY2_SUMMARY.md`.
+문제는 GitHub Issues로 남겨 주세요. 개발 과정: `docs/DEVLOG.md`, 하루 종합: `docs/DAY1_SUMMARY.md`, `docs/DAY2_SUMMARY.md`, `docs/DAY3_SUMMARY.md`.
 
-## 현재 한계 (DAY 1)
+## 현재 한계 (DAY 3)
 - 로컬 브라우저 접속은 ERR_CONNECTION_REFUSED(셸 curl은 200, 원인 미확인, docs/evidence/day1-run1/). 브라우저 검증은 공개 미리보기에서 수행.
-- 스크린리더·실제 모바일 기기·다른 브라우저 엔진 미검증.
-- Notion 기록: https://app.notion.com/p/411000b759dc81959f77fccd727a45ae
-- 공개 배포 주소 없음. 일일 시드·난이도·오프라인 캐시 미구현.
+- 스크린리더·실제 모바일 기기·Chrome 외 브라우저 미검증.
+- 기록 있는 시드의 「어제 최고」 줄이 실제 Chrome에서 자정을 넘는 경로는 미확인(headless는 확인).
+- 난이도/항로 길이는 사람 플레이 근거가 없어 조정하지 않음.
 - 기억 단계에서도 출발점·도착점은 의도적으로 보입니다.
+- Notion 기록: https://app.notion.com/p/411000b759dc81959f77fccd727a45ae

@@ -474,3 +474,21 @@ run3 완료. 누적 13/35. 다음: DAY3 run4(누적 14).
 **참고:** 해당 시드에 기록이 없어, 「어제 최고」 줄의 실제 Chrome 자정 넘김은 미확인. (headless 시계 조작에서는 「어제 최고 실수 0 · 30.2초」를 확인함.) 실기기·스크린리더·다른 브라우저는 여전히 미확인.
 
 run4 완료. 누적 14/35. 다음: DAY3 run5(누적 15) — 안정화·DAY3 종합.
+
+## DAY 3 · 회차 5/5 (누적 15/35) — 시작 2026-11-11 00:07 KST (시작 순서대로 DAY3 마지막 회차)
+**확인:** local·origin `e663aa0eebaf5ec7b69f7907d068ccc23ad711bd`, STATE 누적 14·다음 run5, Pages `9568a9095155`.
+
+**결정:** DAY1·DAY2의 5회차처럼 안정화와 DAY3 종합을 우선. 기능 추가는 하지 않음. run4 Chrome에서 비어 있던 **기록 있는 시드의 자정 넘김 「어제 최고」** 경로와, SW/업데이트 배너/자정 갱신 상호작용을 headless(시계 조작)로 점검.
+
+**안정화 (코드 변경 없음, 버전 `9568a9095155` 유지):**
+- 미리보기+저장된 최고: 자정 전 「오늘 최고 실수 0 · 30.2초」 → 자정 후 시드·hash·판 유지, 「어제 최고 실수 0 · 30.2초」.
+- 완주 후: 상태·결과 복사·헤더의 「오늘 최고」가 자정 후 「어제 최고」로 바뀜, 완주 상태 유지.
+- 업데이트 배너를 띄운 채 SW가 `afterimage-9568a9095155`를 controlling: 자정 후 자동 새로고침 없음, 배너 유지, 문구만 갱신.
+제품 결함은 추가로 발견되지 않아 수정·`version:write`는 하지 않음. `npm test` 68/68, `check` 통과.
+증거: [기록줄 전](evidence/day3-run5/headless-stored-best-before.png) · [후](evidence/day3-run5/headless-stored-best-after.png) · [완주 전](evidence/day3-run5/headless-done-before.png) · [후](evidence/day3-run5/headless-done-after.png) · [배너+자정](evidence/day3-run5/headless-banner-after-midnight.png).
+
+**종합:** [DAY3_SUMMARY.md](DAY3_SUMMARY.md). run4·run5는 11-11 KST에 걸쳐 진행됐고, 시작 순서대로 DAY3로 셌다.
+
+**미확인:** 실제 Chrome(이 회차 안정화 경로, 특히 기록 있는 시드의 자정 넘김 「어제 최고」 줄), 실기기, 스크린리더, 다른 브라우저.
+
+**다음:** 실제 Chrome QA. 그다음 '더'는 DAY4 run1(누적 16).
