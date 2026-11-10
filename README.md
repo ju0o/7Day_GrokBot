@@ -28,7 +28,7 @@ npm run check  # 구문 검사
 `public/` 폴더는 정적 파일이라 아무 정적 호스팅에도 올릴 수 있습니다(ES 모듈이라 `file://` 직접 열기는 브라우저에 따라 막힐 수 있음).
 
 ## 배포 시 주의
-`public/` 파일을 바꾸면 `npm run version:write`로 `?v=` 버전을 다시 계산하세요. 버전은 파일 내용의 sha256에서 나오고(버전 토큰 자체는 제외), `npm run check`가 불일치하면 실패합니다. 이미 옛 `index.html`을 캐시한 브라우저는 GitHub Pages 캐시(최대 약 10분) 동안 옛 버전을 볼 수 있습니다.
+`public/` 파일을 바꾸면 `npm run version:write`로 `?v=` 버전을 다시 계산하세요. 버전은 파일 내용의 sha256에서 나오고(버전 토큰 자체는 제외), `npm run check`가 불일치하면 실패합니다. 이미 옛 `index.html`을 캐시한 브라우저는 GitHub Pages 캐시(최대 약 10분) 동안 옛 버전을 볼 수 있습니다. 이전에 열어 둔 탭의 서비스 워커가 옛 빌드를 제공하면 주소의 `?qa=`가 옛 값으로 보일 수 있고, 업데이트 배너는 첫 화면이 아니라 이후 상호작용 뒤에 나타날 수 있습니다(DAY4 run1 Chrome QA).
 
 ## 구조
 - `public/engine.mjs` (일일 시드 `dailySeed` / `seoulYmd` 포함) — 순수·결정적 게임 엔진(시드 PRNG, 자기교차 없는 직교 항로, 불변 상태 전이, 기억 단계에서 항로를 숨기는 `view`)
@@ -41,10 +41,11 @@ npm run check  # 구문 검사
 ## 문의·기록
 문제는 GitHub Issues로 남겨 주세요. 개발 과정: `docs/DEVLOG.md`, 하루 종합: `docs/DAY1_SUMMARY.md`, `docs/DAY2_SUMMARY.md`, `docs/DAY3_SUMMARY.md`.
 
-## 현재 한계 (DAY 3)
+## 현재 한계 (DAY 4)
 - 로컬 브라우저 접속은 ERR_CONNECTION_REFUSED(셸 curl은 200, 원인 미확인, docs/evidence/day1-run1/). 브라우저 검증은 공개 미리보기에서 수행.
 - 스크린리더·실제 모바일 기기·Chrome 외 브라우저 미검증.
 - 기록 있는 시드의 「어제 최고」 줄이 실제 Chrome에서 자정을 넘는 경로는 미확인(headless는 확인).
+- 이미 설치된 서비스 워커가 있으면 첫 로드에 이전 버전이 나올 수 있고, 업데이트 배너가 바로 안 뜨기도 한다(DAY4 run1 Chrome QA). GitHub Pages API가 빌드를 `errored`로 표시해도 새 파일이 제공된 경우가 있다.
 - 난이도/항로 길이는 사람 플레이 근거가 없어 조정하지 않음.
 - 기억 단계에서도 출발점·도착점은 의도적으로 보입니다.
 - Notion 기록: https://app.notion.com/p/411000b759dc81959f77fccd727a45ae

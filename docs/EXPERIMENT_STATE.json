@@ -18,14 +18,15 @@
   "last_run": {
     "day": 4,
     "run": 1,
-    "status": "in_progress",
-    "started": "2026-11-11 01:00 KST"
+    "status": "completed",
+    "started": "2026-11-11 01:00 KST",
+    "completed": "2026-11-11 01:06 KST"
   },
   "next_run": {
     "day": 4,
     "run": 2,
     "cumulative": 17,
-    "note": "DAY4 run1 Chrome QA 대기. 다음 더는 DAY4 run2(누적 17)."
+    "note": "DAY4 run1 완료. 다음 더는 DAY4 run2(누적 17)."
   },
   "notion_url": "https://app.notion.com/p/411000b759dc81959f77fccd727a45ae",
   "day1_run1": {
@@ -150,7 +151,7 @@
     "docs_commit": "a40551cfa5ad24d1a6b9161dc5ac7ee40af9d4dc",
     "asset_version": "245749cb6459",
     "tests": "npm test 70/70 pass",
-    "browser_qa": "headless 9/9 PASS; real Chrome pending",
-    "status": "in_progress"
+    "browser_qa": "Chrome QA (DevTools closed): first load served by old SW, address ?qa=9568a9095155 (old build rewrote qa), no banner until 어제 항로 click; banner above seed row pushed layout; 새 버전 열기 once -> ?qa=245749cb6459#seed=daily-2026-11-10, banner gone. Steps 2-5 on new build PASS: today hint, yesterday hint, back today, 새 항로 t4qrgc hint hidden. Evidence chrome/01-04 (PIL desktop grab). 01-today and 03-back-today are byte-identical. 04 not reopened after save. Observation (not fixed): update check after interaction, banner shifts layout. Pages API errored but new version was served.",
+    "status": "completed"
   }
 }

@@ -511,6 +511,14 @@ run5·DAY3 완료. 누적 15/35. 다음: DAY4 run1(누적 16).
 **headless (사람 실기기 아님):** 9/9 PASS. 오늘·어제·복귀·지난 일일·연습(안내 숨김), 시계 조작으로 자정 후 판 유지+어제 안내.
 증거: [오늘](evidence/day4-run1/headless-today-hint.png) · [어제](evidence/day4-run1/headless-yesterday-hint.png) · [지난](evidence/day4-run1/headless-older-hint.png) · [연습](evidence/day4-run1/headless-practice-no-hint.png) · [자정 후](evidence/day4-run1/headless-hint-after-midnight.png).
 
-**미확인:** 실제 Chrome, 실기기, 스크린리더, 다른 브라우저.
+### DAY 4 · 회차 1 실제 Chrome QA (같은 회차, DevTools 닫힘)
+**첫 로드:** `?qa=245749cb6459#seed=daily-2026-11-11`을 열었으나 옛 SW 캐시가 이전 빌드를 제공함. 주소창은 `?qa=9568a9095155`(옛 빌드가 qa 값을 다시 씀). 처음에는 업데이트 배너가 없었음. 「어제 항로」를 누른 뒤에야 배너 「새 버전이 있어요. 새로고침하면 적용돼요.」가 시드 줄 위에 나타나 레이아웃을 아래로 밀었음. 「새 버전 열기」를 한 번 클릭 → 주소 `?qa=245749cb6459#seed=daily-2026-11-10`, 배너 사라짐, 다시 나타나지 않음. 이후 2–5단계는 새 빌드에서 다시 진행.
 
-**다음:** 실제 Chrome QA. 그다음 더는 DAY4 run2(누적 17).
+**PASS (새 빌드):** 오늘 `daily-2026-11-11`·배지 「오늘의 항로」·격자 바로 위 「오늘의 항로는 서울 자정에 바뀌어요.」. 「어제 항로」→ `#seed=daily-2026-11-10`·「어제의 항로」·「어제의 항로예요. 오늘의 항로 버튼으로 오늘 시드를 열 수 있어요.」. 오늘 복귀 PASS. 「새 항로」 시드 `t4qrgc`는 배지 없음, 안내 요소는 비고 hidden. 겹침은 보이지 않음.
+증거(PIL 데스크톱 캡처): [오늘](evidence/day4-run1/chrome/01-today.png) · [어제](evidence/day4-run1/chrome/02-yesterday.png) · [오늘 복귀](evidence/day4-run1/chrome/03-back-today.png) · [새 항로](evidence/day4-run1/chrome/04-random.png). `01-today.png`와 `03-back-today.png`는 바이트가 동일하다(453704). 오늘 복귀 화면은 이 파일만으로는 첫 오늘 화면과 구분되지 않는다. `04-random.png`는 저장 후 다시 열어 확인하지 않음.
+
+**관찰 (이번 회차에서 수정하지 않음, 후보):** 새 버전 확인이 첫 로드가 아니라 이후 상호작용(여기서는 「어제 항로」 클릭) 뒤에 나타나고, 배너가 레이아웃을 아래로 민다. GitHub Pages API는 최근 빌드를 `errored`로 표시했지만, 새 버전(`245749cb6459`)은 실제로 제공됐다.
+
+**미확인:** 스크린리더가 안내를 읽는지, 실기기, 다른 브라우저, 기록 있는 시드의 실제 Chrome 「어제 최고」 줄, 로컬 127.0.0.1 연결 거부.
+
+run1 완료. 누적 16/35. 다음: DAY4 run2(누적 17).
