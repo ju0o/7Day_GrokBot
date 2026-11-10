@@ -11,21 +11,22 @@
   "runs_by_date": {
     "2026-11-08": 5,
     "2026-11-09": 5,
-    "2026-11-10": 3
+    "2026-11-10": 4
   },
-  "cumulative_runs": 13,
+  "cumulative_runs": 14,
   "last_run": {
     "day": 3,
-    "run": 3,
-    "status": "completed",
-    "started": "2026-11-10 23:24 KST",
-    "completed": "2026-11-10 23:40 KST"
+    "run": 4,
+    "status": "in_progress",
+    "started": "2026-11-10 23:44 KST",
+    "note": "시작일 기준 DAY3, 자정 넘겨도 DAY3 유지"
   },
   "next_run": {
     "day": 3,
     "run": 4,
     "cumulative": 14,
-    "note": "DAY3 run3 완료 후 다음 더는 DAY3 run4(누적 14). 이미 시작된 회차는 자정을 넘겨도 DAY3 유지(이 run3). PLAN은 DAY3=11-10, DAY7=11-14, 하루 5회·총 35회. 「하루 5회를 다 못 채운 채 날이 바뀌면」 남은 횟수 처리 규칙은 PLAN/PRD에 없음. 다음 더가 2026-11-11 KST 이후이면 문서에 있는 원칙만 따르고 여기서 새 규칙을 정하지 않음."
+    "status": "in_progress",
+    "note": "DAY3 run4 진행중(23:44 KST 시작). 실제 Chrome QA 대기. 시작일 기준 DAY3 유지."
   },
   "notion_url": "https://app.notion.com/p/411000b759dc81959f77fccd727a45ae",
   "day1_run1": {
@@ -125,5 +126,14 @@
     "note": "DAY3 유지 even if calendar rolls",
     "fix_commit": "81ca35ebfec44af076afa08f4afa788e8272ae4c",
     "status": "completed"
+  },
+  "day3_run4": {
+    "implementation_commit": "7d3b258049fab8ec2c1276d1fbedcbeb8a762879",
+    "asset_version": "9568a9095155",
+    "tests": "npm test 68/68 pass",
+    "browser_qa": "headless Chromium clock 15/15 PASS; real Chrome pending",
+    "started_date": "2026-11-10",
+    "status": "in_progress",
+    "note": "DAY3 유지 even if calendar rolls"
   }
 }

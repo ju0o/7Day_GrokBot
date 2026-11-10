@@ -449,3 +449,24 @@ run2 완료. 다음: DAY3 run3(누적 13).
 run3 완료. 누적 13/35. 다음: DAY3 run4(누적 14).
 
 **횟수 메모 (판단 아님, 문서에 있는 것만):** PLAN은 DAY3를 11-10, DAY7을 11-14로 달력에 대응하고, `runs_per_day` 5 · 총 35를 적는다. 이미 시작된 회차(이 run3)는 자정을 넘겨도 DAY3를 유지한다고 DEVLOG/STATE에 적혀 있다. 「하루 5회를 다 못 채운 채 날이 바뀌면」 남은 횟수를 소멸·이월하는지, 다음 더의 실험일을 어떻게 매기는지는 PLAN·PRD에 명시되어 있지 않다. 다음 더가 2026-11-11 KST 이후이면 그때 문서에 있는 원칙만 따르고, 여기서 새 규칙을 정하지 않는다.
+
+## DAY 3 · 회차 4/5 (누적 14/35) — 시작 2026-11-10 23:44 KST (시작일 기준 DAY3, 자정 넘겨도 유지)
+**확인:** local·origin `58f7efed89d3de779392d19f2ef1924a4b6b46a2`, STATE 누적 13·다음 run4, Pages `f5545088a2d6`.
+
+**결정:** PLAN의 남은 큰 항목(난이도/길이, 실기기·스크린리더, DAY6–7)은 사람 근거 또는 범위가 커서 이번 회차에 맞지 않음. 어제 항로·날짜 상대 문구를 막 넣었고 자정이 임박해, **열린 탭이 Asia/Seoul 자정을 넘길 때 배지·기록 문구가 옛 날짜에 머물지 않게 갱신**하는 쪽을 골랐다. 진행 중인 판·시드·hash는 강제로 바꾸지 않음. 기록 저장 규칙·SW·업데이트 배너는 유지.
+
+**구현 (7d3b258049fab8ec2c1276d1fbedcbeb8a762879, 버전 `9568a9095155`):**
+- `nextSeoulMidnight`, `msUntilNextSeoulMidnight`, `dayChangeAction`(라벨만 갱신, `restartGame` 항상 false).
+- `app.js`: 다음 서울 자정에 `setTimeout`, `visibilitychange`/`focus`/`pageshow` 보조. 날짜가 바뀌면 `render()`만. 오늘의 항로·어제 항로 버튼은 클릭 시점의 `dailySeed()`/`previousDailySeed()`를 그대로 씀.
+- 헤더 기록 줄 가드를  accidental `id=daily` 전역 대신 `isDailySeed`로 정리(일일 시드 표시는 동일).
+- 도움말: 탭을 연 채 자정이 지나면 문구만 맞춘다고 한 줄 추가.
+- `version:write`로 `sw.js` 갱신.
+
+**테스트:** `npm test` 68/68, `check` 통과. 추가: 자정 시각·대기 시간, `dayChangeAction`이 판을 재시작하지 않음, 같은 시드의 배지·최고 문구가 자정 전후 바뀜.
+
+**headless Chromium (시계 조작, 사람 실기기 아님):** 로컬 `127.0.0.1:4278`, 15/15 PASS. 23:59:50 KST에 `daily-2026-11-10`을 연 뒤 00:00:10으로 진행 — 시드·hash·미리보기 유지, 배지 「어제의 항로」, 「어제 최고 실수 0 · 30.2초」. 「오늘의 항로」 클릭 → `daily-2026-11-11`. `daily-2026-11-09`는 자정 후 「일일 항로」·「2026-11-09 최고 …」, 「어제 항로」 클릭 → `daily-2026-11-10`.
+증거: [자정 전](evidence/day3-run4/headless-before-midnight.png) · [자정 후](evidence/day3-run4/headless-after-midnight.png) · [옛 시드 자정 후](evidence/day3-run4/headless-older-after-midnight.png).
+
+**미확인:** 실제 Chrome(열린 탭 자정 넘김 포함), 실기기, 스크린리더, 다른 브라우저.
+
+**다음:** 실제 Chrome QA.
