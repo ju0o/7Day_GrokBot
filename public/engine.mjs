@@ -125,6 +125,30 @@ export function shiftYmd(ymd, days) {
   return dt.toISOString().slice(0, 10);
 }
 export function previousDailySeed(now = new Date()) { return 'daily-' + shiftYmd(seoulYmd(now), -1); }
+
+/** Seoul has no DST; midnight is always UTC 15:00. */
+const SEOUL_OFFSET_MS = 9 * 60 * 60 * 1000;
+const DAY_MS = 24 * 60 * 60 * 1000;
+/** Instant of the next Asia/Seoul midnight strictly after `now` (00:00 is already the new day → following midnight). */
+export function nextSeoulMidnight(now = new Date()) {
+  const t = (now instanceof Date ? now : new Date(now)).getTime();
+  const dayIndex = Math.floor((t + SEOUL_OFFSET_MS) / DAY_MS);
+  return new Date((dayIndex + 1) * DAY_MS - SEOUL_OFFSET_MS);
+}
+export function msUntilNextSeoulMidnight(now = new Date()) {
+  const t = (now instanceof Date ? now : new Date(now)).getTime();
+  return nextSeoulMidnight(now).getTime() - t;
+}
+/**
+ * Open-tab Seoul day change: refresh date-relative labels only.
+ * Never auto-restart or retarget the current board/seed/hash (restartGame is always false).
+ */
+export function dayChangeAction(observedYmd, now = new Date()) {
+  const ymd = seoulYmd(now);
+  if (observedYmd == null || observedYmd === ymd)
+    return { ymd, refreshLabels: false, restartGame: false };
+  return { ymd, refreshLabels: true, restartGame: false };
+}
 /** '오늘의 항로' | '어제의 항로' | null (not a daily seed). Older daily dates stay labeled 일일 항로. */
 export function dailyBadgeLabel(seed, now = new Date()) {
   if (!isDailySeed(seed)) return null;

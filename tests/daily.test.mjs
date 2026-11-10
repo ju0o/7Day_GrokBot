@@ -58,3 +58,45 @@ test('MIN_BEST_MS unchanged', async () => {
   const { MIN_BEST_MS } = await import('../public/engine.mjs');
   assert.equal(MIN_BEST_MS, 100);
 });
+
+import { nextSeoulMidnight, msUntilNextSeoulMidnight, dayChangeAction, bestTitle, formatBestLine } from '../public/engine.mjs';
+test('next Seoul midnight is the following 00:00 Asia/Seoul', () => {
+  const justBefore = new Date('2026-11-10T23:59:59.000+09:00');
+  const atMidnight = new Date('2026-11-11T00:00:00.000+09:00');
+  const after = new Date('2026-11-11T00:00:00.500+09:00');
+  assert.equal(nextSeoulMidnight(justBefore).toISOString(), '2026-11-10T15:00:00.000Z');
+  assert.equal(msUntilNextSeoulMidnight(justBefore), 1000);
+  assert.equal(msUntilNextSeoulMidnight(new Date('2026-11-10T14:59:59.000Z')), 1000);
+  assert.equal(msUntilNextSeoulMidnight(atMidnight), 24 * 60 * 60 * 1000);
+  assert.equal(nextSeoulMidnight(after).toISOString(), '2026-11-11T15:00:00.000Z');
+});
+test('dayChangeAction refreshes labels only and never restarts the board', () => {
+  const before = new Date('2026-11-10T23:59:59+09:00');
+  const after = new Date('2026-11-11T00:00:00+09:00');
+  assert.deepEqual(dayChangeAction('2026-11-10', before), { ymd: '2026-11-10', refreshLabels: false, restartGame: false });
+  assert.deepEqual(dayChangeAction('2026-11-10', after), { ymd: '2026-11-11', refreshLabels: true, restartGame: false });
+  assert.deepEqual(dayChangeAction(null, after), { ymd: '2026-11-11', refreshLabels: false, restartGame: false });
+  assert.deepEqual(dayChangeAction('2026-11-11', after), { ymd: '2026-11-11', refreshLabels: false, restartGame: false });
+  assert.equal(dayChangeAction('2026-11-10', after).restartGame, false);
+});
+test('same open seed: badge and best title retarget after Seoul midnight', () => {
+  const seed = 'daily-2026-11-10';
+  const older = 'daily-2026-11-09';
+  const before = new Date('2026-11-10T23:59:59+09:00');
+  const after = new Date('2026-11-11T00:00:00+09:00');
+  assert.equal(dailyBadgeLabel(seed, before), '오늘의 항로');
+  assert.equal(dailyBadgeLabel(seed, after), '어제의 항로');
+  assert.equal(bestTitle(seed, before), '오늘 최고');
+  assert.equal(bestTitle(seed, after), '어제 최고');
+  assert.equal(dailyBadgeLabel(older, before), '어제의 항로');
+  assert.equal(dailyBadgeLabel(older, after), '일일 항로');
+  assert.equal(bestTitle(older, before), '어제 최고');
+  assert.equal(bestTitle(older, after), '2026-11-09 최고');
+  const best = { mistakes: 0, ms: 30200, steps: 7 };
+  assert.equal(formatBestLine(best, seed, before), '오늘 최고 실수 0 · 30.2초');
+  assert.equal(formatBestLine(best, seed, after), '어제 최고 실수 0 · 30.2초');
+  assert.equal(formatBestLine(best, older, after), '2026-11-09 최고 실수 0 · 30.2초');
+  assert.equal(previousDailySeed(before), 'daily-2026-11-09');
+  assert.equal(previousDailySeed(after), 'daily-2026-11-10');
+  assert.equal(dailySeed(after), 'daily-2026-11-11');
+});

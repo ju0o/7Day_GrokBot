@@ -1,8 +1,8 @@
-import * as E from './engine.mjs?v=f5545088a2d6';
-import { keyAction, focusAfterMove } from './keys.mjs?v=f5545088a2d6';
-import { loadBest, saveBest } from './store.mjs?v=f5545088a2d6';
-import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=f5545088a2d6';
-import { shouldPromptUpdate, UPDATE_MESSAGE } from './update.mjs?v=f5545088a2d6';
+import * as E from './engine.mjs?v=9568a9095155';
+import { keyAction, focusAfterMove } from './keys.mjs?v=9568a9095155';
+import { loadBest, saveBest } from './store.mjs?v=9568a9095155';
+import { liveStatusText, cellAriaLabel, focusAfterPhase, statusMessage, statusClass } from './a11y.mjs?v=9568a9095155';
+import { shouldPromptUpdate, UPDATE_MESSAGE } from './update.mjs?v=9568a9095155';
 const $ = (id) => document.getElementById(id);
 const board = $('board');
 let state;
@@ -49,7 +49,7 @@ function render() {
   if (badge) { badge.hidden = !badgeLabel; badge.textContent = badgeLabel || ''; }
   const bestEl = $('daily-best');
   if (bestEl) {
-    const line = daily ? E.formatBestLine(loadBest(state.seed), state.seed) : null;
+    const line = E.isDailySeed(state.seed) ? E.formatBestLine(loadBest(state.seed), state.seed) : null;
     bestEl.hidden = !line;
     bestEl.textContent = line || '';
   }
@@ -127,6 +127,24 @@ document.addEventListener('keydown', (e) => {
 function syncFromHash() { const r = E.resolveSeed(location.hash, state ? state.seed : null); if (r.restart) start(r.seed); }
 window.addEventListener('hashchange', syncFromHash);
 syncFromHash();
+
+let observedYmd = E.seoulYmd();
+let midnightTimer = 0;
+function refreshDayLabelsIfNeeded() {
+  const action = E.dayChangeAction(observedYmd);
+  observedYmd = action.ymd;
+  if (action.refreshLabels && state) render();
+  scheduleMidnightRefresh();
+}
+function scheduleMidnightRefresh() {
+  clearTimeout(midnightTimer);
+  const wait = Math.min(Math.max(E.msUntilNextSeoulMidnight(), 0) + 25, 2147483647);
+  midnightTimer = setTimeout(refreshDayLabelsIfNeeded, wait);
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') refreshDayLabelsIfNeeded(); });
+window.addEventListener('focus', refreshDayLabelsIfNeeded);
+window.addEventListener('pageshow', refreshDayLabelsIfNeeded);
+scheduleMidnightRefresh();
 
 function showUpdateBanner() {
   const box = $('update-banner'); const text = $('update-text');
